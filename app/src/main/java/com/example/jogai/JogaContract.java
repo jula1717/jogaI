@@ -12,7 +12,7 @@ public class JogaContract {
         public static final String COLUMN_NAME="name";
         public static final String COLUMN_PICTURE="picture";
         public static final String COLUMN_DESCRIPTION="description";
-        public static final String COLUMN_TYPE="type";
+        public static final String COLUMN_TYPE_ID="type";
         public static final String COLUMN_DIFFICULTY="difficulty";
         public static final String COLUMN_DONE="done";
     }
