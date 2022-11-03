@@ -1,10 +1,17 @@
 package com.example.jogai;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import com.example.jogai.JogaContract.*;
 
 import androidx.annotation.Nullable;
+
+import java.io.ByteArrayOutputStream;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
@@ -39,6 +46,9 @@ public class JogaDbHelper extends SQLiteOpenHelper {
                 +JogaContract.Asana.COLUMN_DONE+" BOOLEAN);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_ASANAS_TABLE);
+
+        fillTypesTable();
+
     }
 
     @Override
@@ -47,4 +57,28 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ JogaContract.Types.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
+
+    public void fillTypesTable(){
+        AsanaType t1 = new AsanaType("pozycja stojaca");
+        insertType(t1);
+        AsanaType t2 = new AsanaType("pozycja siedzaca");
+        insertType(t2);
+        AsanaType t3 = new AsanaType("skłon do przodu");
+        insertType(t3);
+        AsanaType t4 = new AsanaType("wygięcie do tyłu");
+        insertType(t4);
+        AsanaType t5 = new AsanaType("skret tulowia");
+        insertType(t5);
+        AsanaType t6 = new AsanaType("pozycja odwrócona");
+        insertType(t6);
+        AsanaType t7 = new AsanaType("pozycja relaksacyjna");
+        insertType(t7);
+    }
+
+    private void insertType(AsanaType type) {
+        ContentValues cv = new ContentValues();
+        cv.put(Types.COLUMN_TYPE,type.getType());
+        db.insert(Types.TABLE_NAME,null,cv);
+    }
+
 }
