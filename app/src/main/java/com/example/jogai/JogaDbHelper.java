@@ -39,7 +39,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
                 +JogaContract.Asana._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +JogaContract.Asana.COLUMN_SANSKRIT_NAME+" TEXT,"
                 +JogaContract.Asana.COLUMN_NAME+" TEXT,"
-                +JogaContract.Asana.COLUMN_PICTURE+" BLOB,"
+                +JogaContract.Asana.COLUMN_IMAGE +" BLOB,"
                 +JogaContract.Asana.COLUMN_DESCRIPTION+" TEXT,"
                 +JogaContract.Asana.COLUMN_TYPE_ID+" INTEGER,"
                 +JogaContract.Asana.COLUMN_DIFFICULTY+" TINYINT,"
@@ -48,6 +48,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_ASANAS_TABLE);
 
         fillTypesTable();
+        fillAsanasTable();
 
     }
 
@@ -58,18 +59,20 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    //fill tables, could comment later
+
     public void fillTypesTable(){
         AsanaType t1 = new AsanaType("pozycja stojaca");
         insertType(t1);
         AsanaType t2 = new AsanaType("pozycja siedzaca");
         insertType(t2);
-        AsanaType t3 = new AsanaType("skłon do przodu");
+        AsanaType t3 = new AsanaType("sklon do przodu");
         insertType(t3);
-        AsanaType t4 = new AsanaType("wygięcie do tyłu");
+        AsanaType t4 = new AsanaType("wygiecie do tylu");
         insertType(t4);
         AsanaType t5 = new AsanaType("skret tulowia");
         insertType(t5);
-        AsanaType t6 = new AsanaType("pozycja odwrócona");
+        AsanaType t6 = new AsanaType("pozycja odwrocona");
         insertType(t6);
         AsanaType t7 = new AsanaType("pozycja relaksacyjna");
         insertType(t7);
@@ -79,6 +82,40 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(Types.COLUMN_TYPE,type.getType());
         db.insert(Types.TABLE_NAME,null,cv);
+    }
+
+    public void fillAsanasTable(){
+        String descriptionMalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.";
+        Bitmap bitmapMalasana=BitmapFactory.decodeResource(context.getResources(),R.drawable.malasana);
+        byte[] imageMalasana = getBitmapAsByteArray(bitmapMalasana); // this is a function
+        Asana a1= new Asana("Malasana","Girlanda",imageMalasana,descriptionMalasana,AsanaType.POZYCJA_STOJACA, (byte) 2,true);
+        insertAsana(a1);
+
+        String descriptionBalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+        Bitmap bitmapBalasana=BitmapFactory.decodeResource(context.getResources(),R.drawable.balasana);
+        byte[] imageBalasana = getBitmapAsByteArray(bitmapBalasana); // this is a function
+        Asana a2= new Asana("Balasana","Dziecko",imageBalasana,descriptionMalasana,AsanaType.POZYCJA_RELAKSACYJNA, (byte) 1,true);
+        insertAsana(a2);
+    }
+
+    //To store a image in to db
+
+    public void insertAsana(Asana asana) throws SQLiteException{
+        ContentValues cv = new  ContentValues();
+        cv.put(JogaContract.Asana.COLUMN_SANSKRIT_NAME,asana.getSanskritName());
+        cv.put(JogaContract.Asana.COLUMN_NAME,asana.getName());
+        cv.put(JogaContract.Asana.COLUMN_IMAGE,asana.getImage());
+        cv.put(JogaContract.Asana.COLUMN_DESCRIPTION,asana.getDescription());
+        cv.put(JogaContract.Asana.COLUMN_TYPE_ID,asana.getColumnTypeId());
+        cv.put(JogaContract.Asana.COLUMN_DIFFICULTY,asana.getDifficulty());
+        cv.put(JogaContract.Asana.COLUMN_DONE,asana.isDone());
+        db.insert( JogaContract.Asana.TABLE_NAME, null, cv );
+    }
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
     }
 
 }
