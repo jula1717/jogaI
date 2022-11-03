@@ -9,14 +9,17 @@ import androidx.annotation.Nullable;
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
     public static final int DATABASE_VERSION=1;
+    SQLiteDatabase db;
+    Context context;
 
     public JogaDbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context=context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        db=sqLiteDatabase;
         final String SQL_CREATE_TYPES_TABLE = "CREATE TABLE "
                 +JogaContract.Types.TABLE_NAME + " ("
                 +JogaContract.Types._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
