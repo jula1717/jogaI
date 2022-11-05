@@ -21,9 +21,18 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     SQLiteDatabase db;
     Context context;
 
-    public JogaDbHelper(@Nullable Context context) {
+    private static JogaDbHelper instance;
+
+    private JogaDbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
+    }
+
+    public static synchronized JogaDbHelper getInstance(Context context){
+        if(instance==null){
+            instance = new JogaDbHelper(context.getApplicationContext());
+        }
+        return instance;
     }
 
     @Override

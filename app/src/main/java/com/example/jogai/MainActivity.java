@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        dbHelper = new JogaDbHelper(this);
+        dbHelper = JogaDbHelper.getInstance(this);
         db = dbHelper.getWritableDatabase();
         asanas=dbHelper.getSortedAsanas((byte)2); //TODO: teraz to wyświetli tylko te o trudności dwa , a to ma przecież po tym sortować, zmienić SQL, wywalić WHERE a zrobić ORDER BY....
         adapter= new AsanasAdapter(getApplicationContext(), getAllAsanas());
