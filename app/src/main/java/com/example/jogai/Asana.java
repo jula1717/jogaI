@@ -1,6 +1,9 @@
 package com.example.jogai;
 
-public class Asana {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Asana implements Parcelable {
     int id;
     String sanskritName;
     String name;
@@ -9,6 +12,9 @@ public class Asana {
     int columnTypeId;
     byte difficulty;
     boolean done;
+
+    public Asana() {
+    }
 
     public Asana(String sanskritName, String name, byte[] image, String description, int columnTypeId, byte difficulty, boolean done) {
         this.sanskritName = sanskritName;
@@ -19,6 +25,29 @@ public class Asana {
         this.difficulty = difficulty;
         this.done = done;
     }
+
+    protected Asana(Parcel in) {
+        id = in.readInt();
+        sanskritName = in.readString();
+        name = in.readString();
+        image = in.createByteArray();
+        description = in.readString();
+        columnTypeId = in.readInt();
+        difficulty = in.readByte();
+        done = in.readByte() != 0;
+    }
+
+    public static final Creator<Asana> CREATOR = new Creator<Asana>() {
+        @Override
+        public Asana createFromParcel(Parcel in) {
+            return new Asana(in);
+        }
+
+        @Override
+        public Asana[] newArray(int size) {
+            return new Asana[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -82,5 +111,22 @@ public class Asana {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(sanskritName);
+        parcel.writeString(name);
+        parcel.writeByteArray(image);
+        parcel.writeString(description);
+        parcel.writeInt(columnTypeId);
+        parcel.writeByte(difficulty);
+        parcel.writeByte((byte) (done ? 1 : 0));
     }
 }
