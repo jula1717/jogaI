@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=1;
+    public static final int DATABASE_VERSION=3;
     SQLiteDatabase db;
     Context context;
 
@@ -27,8 +27,6 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
     }
-
-    //TODO: to musi działać na polskich znakach
 
     public static synchronized JogaDbHelper getInstance(Context context){
         if(instance==null){
@@ -74,15 +72,13 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
 
     //sorted by difficulty
-    public ArrayList<Asana> getSortedAsanas(byte difficulty){
+    public ArrayList<Asana> getSortedAsanas(String columnSortBy){
         ArrayList<Asana> asanas = new ArrayList<>();
         db = getReadableDatabase();
-//        final String SQL_SELECT_SPECIFIC_ASANAS = JogaContract.Asana.COLUMN_DIFFICULTY + "=?";
-//        String[] selectionArgs = {String.valueOf(difficulty)};
-//        Cursor c = db.query(JogaContract.Asana.TABLE_NAME,null,SQL_SELECT_SPECIFIC_ASANAS,selectionArgs,null,null,null);
 
-        String[] selectionArgs = {String.valueOf(difficulty)};
-        Cursor c = db.rawQuery("SELECT * FROM "+ JogaContract.Asana.TABLE_NAME+" WHERE "+JogaContract.Asana.COLUMN_DIFFICULTY+"=?",selectionArgs);
+        String [] selectionsArgs = {columnSortBy};
+        //Cursor c = db.rawQuery("SELECT * FROM "+ JogaContract.Asana.TABLE_NAME+" ORDER BY ?",selectionsArgs);
+        Cursor c = db.query(JogaContract.Asana.TABLE_NAME,null,null,null,null,null,JogaContract.Asana.COLUMN_SANSKRIT_NAME);
 
         if(c.moveToFirst()){
             do{
@@ -108,9 +104,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT " + Types.COLUMN_TYPE + " FROM " + JogaContract.Types.TABLE_NAME + " WHERE " + Types._ID + "=?", selectionArgs);
 
         if (c.moveToFirst()) {
-        //    do {
-                categoryName = c.getString(c.getColumnIndexOrThrow(Types.COLUMN_TYPE));
-        //    } while (c.moveToNext());
+            categoryName = c.getString(c.getColumnIndexOrThrow(Types.COLUMN_TYPE));
         }
         c.close();
         return categoryName;
@@ -118,6 +112,8 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     //fill tables, could comment later
 
+
+    //TODO: polskie znaki
     public void fillTypesTable(){
         AsanaType t1 = new AsanaType("pozycja stojaca");
         insertType(t1);
@@ -143,7 +139,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     public void fillAsanasTable(){
         String descriptionMalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.";
-        Bitmap bitmapMalasana=BitmapFactory.decodeResource(context.getResources(),R.drawable.malasana);
+        Bitmap bitmapMalasana=BitmapFactory.decodeResource(context.getResources(), R.drawable.malasana);
         byte[] imageMalasana = getBitmapAsByteArray(bitmapMalasana); // this is a function
         Asana a1= new Asana("Malasana","Girlanda",imageMalasana,descriptionMalasana,AsanaType.POZYCJA_STOJACA, (byte) 2,true);
         insertAsana(a1);

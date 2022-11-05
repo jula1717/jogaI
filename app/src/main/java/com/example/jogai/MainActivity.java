@@ -30,12 +30,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         dbHelper = JogaDbHelper.getInstance(this);
         db = dbHelper.getWritableDatabase();
-        asanas=dbHelper.getSortedAsanas((byte)2); //TODO: teraz to wyświetli tylko te o trudności dwa , a to ma przecież po tym sortować, zmienić SQL, wywalić WHERE a zrobić ORDER BY....
-        adapter= new AsanasAdapter(getApplicationContext(), getAllAsanas());
+        String columnSortBy = JogaContract.Asana.COLUMN_SANSKRIT_NAME;//TODO: to ma nie być na sztywno (nazwa sanskryt / nazwa pl / poziom trudności / typ asany / naumiane)
+        asanas=dbHelper.getSortedAsanas(columnSortBy); //TODO: teraz to wyświetli tylko te o trudności dwa , a to ma przecież po tym sortować, zmienić SQL, wywalić WHERE a zrobić ORDER BY....
+        adapter= new AsanasAdapter(getApplicationContext(), getAllAsanas(columnSortBy));
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
-        adapter.swapCursor(getAllAsanas());
+        adapter.swapCursor(getAllAsanas(columnSortBy));
         adapter.setListener(new AsanasAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position) {
@@ -47,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private Cursor getAllAsanas(){
-        return db.query(JogaContract.Asana.TABLE_NAME,null,null,null,null,null,null);
+    private Cursor getAllAsanas(String columnSortBy){
+        return db.query(JogaContract.Asana.TABLE_NAME,null,null,null,null,null,columnSortBy);
     }
 
 }
