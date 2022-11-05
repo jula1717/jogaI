@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=3;
+    public static final int DATABASE_VERSION=5;
     SQLiteDatabase db;
     Context context;
 
@@ -120,20 +120,18 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     //fill tables, could comment later
 
-
-    //TODO: polskie znaki
     public void fillTypesTable(){
-        AsanaType t1 = new AsanaType("pozycja stojaca");
+        AsanaType t1 = new AsanaType("pozycja stojąca");
         insertType(t1);
-        AsanaType t2 = new AsanaType("pozycja siedzaca");
+        AsanaType t2 = new AsanaType("pozycja siedząca");
         insertType(t2);
-        AsanaType t3 = new AsanaType("sklon do przodu");
+        AsanaType t3 = new AsanaType("skłon do przodu");
         insertType(t3);
-        AsanaType t4 = new AsanaType("wygiecie do tylu");
+        AsanaType t4 = new AsanaType("wygięcie do tyłu");
         insertType(t4);
-        AsanaType t5 = new AsanaType("skret tulowia");
+        AsanaType t5 = new AsanaType("skręt tułowia");
         insertType(t5);
-        AsanaType t6 = new AsanaType("pozycja odwrocona");
+        AsanaType t6 = new AsanaType("pozycja odwrócona");
         insertType(t6);
         AsanaType t7 = new AsanaType("pozycja relaksacyjna");
         insertType(t7);
@@ -146,7 +144,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     }
 
     public void fillAsanasTable(){
-        String descriptionMalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.";
+        String descriptionMalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.";
         Bitmap bitmapMalasana=BitmapFactory.decodeResource(context.getResources(), R.drawable.malasana);
         byte[] imageMalasana = getBitmapAsByteArray(bitmapMalasana); // this is a function
         Asana a1= new Asana("Malasana","Girlanda",imageMalasana,descriptionMalasana,AsanaType.POZYCJA_STOJACA, (byte) 2,true);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class AsanaFragment extends Fragment {
         difficulty = view.findViewById(R.id.difficultyLevelTxt);
         type = view.findViewById(R.id.asanaTypeTxt);
         description = view.findViewById(R.id.descriptionTxt);
+        description.setMovementMethod(new ScrollingMovementMethod());
         iconDone = view.findViewById(R.id.iconDone);
         image = view.findViewById(R.id.asanaImg);
         if(getArguments()!=null){
@@ -56,7 +58,7 @@ public class AsanaFragment extends Fragment {
         }
         sankritName.setText(asana.getName());
         name.setText(asana.getName());
-        description.setText(asana.getDescription()); //TODO: co jak napcham za dużo tekstu, czy to się scrolluje, czy trzeba to doprogramować
+        description.setText(asana.getDescription());
         dbHelper = JogaDbHelper.getInstance(context);
         String category = dbHelper.getCategoryNameById(asana.getColumnTypeId());
         type.setText(category.toString()); //TODO: zmienić sql tak, żeby tu była konkretna kategoria, a nie jej id
