@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     AsanasAdapter adapter;
     JogaDbHelper dbHelper;
+    ArrayList<Asana> asanas;
+
+    //TODO: w shared preferences sortowanie i pozostałe ustawienia, sprawdzić też czy nie listę pytań, bo tak mam w quizie
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +30,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         dbHelper = new JogaDbHelper(this);
         db = dbHelper.getWritableDatabase();
+        asanas=dbHelper.getSortedAsanas((byte)2); //TODO: teraz to wyświetli tylko te o trudności dwa , a to ma przecież po tym sortować, zmienić SQL, wywalić WHERE a zrobić ORDER BY....
         adapter= new AsanasAdapter(getApplicationContext(), getAllAsanas());
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         adapter.swapCursor(getAllAsanas());
+        adapter.setListener(new AsanasAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int position) {
+                //TODO: dodać animację
+                recyclerView.setVisibility(View.GONE);
+                AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position));
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment).commit();
+            }
+        });
     }
 
     private Cursor getAllAsanas(){
