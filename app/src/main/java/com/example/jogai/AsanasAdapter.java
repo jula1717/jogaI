@@ -37,8 +37,6 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
             String name = cursor.getString(cursor.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_NAME));
             byte[] imageByteArray = cursor.getBlob(cursor.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE));
             Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageByteArray,0,imageByteArray.length);
-            //boolean done = cursor.getInt(Integer.parseInt(JogaContract.Asana.COLUMN_DONE)) > 0; //TODO: tu chyba jest problem
-
             holder.txtName.setText(name);
             holder.txtSanskritName.setText(sanskritName);
             int drawableResourceId = context.getResources().getIdentifier("ic_done", "drawable", context.getPackageName());
@@ -92,6 +90,19 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
             txtSanskritName = itemView.findViewById(R.id.asanaSanskritNameTxt);
             txtName = itemView.findViewById(R.id.asanaNameTxt);
             imgIconDone = itemView.findViewById(R.id.doneIcon);
+            imgIconDone.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if(listener!=null)
+                    {
+                        int position = getAbsoluteAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            listener.onDoneClicked(position,imgIconDone);
+                        }
+                    }
+                    return true;
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -106,10 +117,9 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
             });
         }
     }
-
-
     interface  OnItemClickListener{
         public void onItemClicked(int position);
+        public void onDoneClicked(int position, ImageView imgIconDone);
     }
 
 }

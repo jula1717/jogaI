@@ -110,6 +110,14 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         return categoryName;
     }
 
+    public void changeAsanaState(int position, boolean newState) {
+        db = getWritableDatabase();
+        String[] selectionArgs = {String.valueOf(position+1),String.valueOf(newState)};
+        Cursor c = db.rawQuery("UPDATE " + JogaContract.Asana.TABLE_NAME + " SET " + JogaContract.Asana.COLUMN_DONE + "=?" + " WHERE " + JogaContract.Asana._ID + "=?", selectionArgs);
+    }
+
+
+
     //fill tables, could comment later
 
 
@@ -171,10 +179,5 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
         return outputStream.toByteArray();
     }
-
-
-
-
-
 
 }

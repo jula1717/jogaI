@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,27 @@ public class MainActivity extends AppCompatActivity {
                 AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position),getApplicationContext());
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment).commit();
             }
+
+            @Override
+            public void onDoneClicked(int position, ImageView imgIconDone) {
+                changeState(position, imgIconDone);
+            }
         });
+    }
+
+    public void changeState(int position, ImageView imgIconDone) {
+        boolean newState = true;
+        if(asanas.get(position).isDone()){
+            newState = false;
+        }
+        asanas.get(position).setDone(newState);
+        dbHelper.changeAsanaState(position,newState);
+        if(asanas.get(position).isDone()){
+            imgIconDone.setColorFilter(getResources().getColor(R.color.teal_200));
+        }else{
+            imgIconDone.setColorFilter(getResources().getColor(R.color.gray));
+        }
+        adapter.notifyDataSetChanged();
     }
 
     private Cursor getAllAsanas(String columnSortBy){
