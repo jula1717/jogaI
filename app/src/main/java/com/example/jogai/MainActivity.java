@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClicked(int position) {
                 //TODO: dodać animację
                 recyclerView.setVisibility(View.GONE);
-                AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position));
+                AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position),getApplicationContext());
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment).commit();
             }
         });

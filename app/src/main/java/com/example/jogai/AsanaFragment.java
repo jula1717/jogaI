@@ -1,5 +1,6 @@
 package com.example.jogai;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -19,14 +20,22 @@ import java.io.ByteArrayOutputStream;
 public class AsanaFragment extends Fragment {
     public static final String ARG_ASANA="asana";
     private Asana asana;
+    Context context;
+    JogaDbHelper dbHelper;
 
-    public static AsanaFragment newInstance(Asana asana){
+    public static AsanaFragment newInstance(Asana asana, Context context){
         AsanaFragment fragment = new AsanaFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_ASANA,asana);
         fragment.setArguments(args);
+        fragment.setContext(context);
         return fragment;
     }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,7 +57,9 @@ public class AsanaFragment extends Fragment {
         sankritName.setText(asana.getName());
         name.setText(asana.getName());
         description.setText(asana.getDescription()); //TODO: co jak napcham za dużo tekstu, czy to się scrolluje, czy trzeba to doprogramować
-        type.setText(""+asana.getColumnTypeId()); //TODO: zmienić sql tak, żeby tu była konkretna kategoria, a nie jej id
+        dbHelper = JogaDbHelper.getInstance(context);
+        String category = dbHelper.getCategoryNameById(asana.getColumnTypeId());
+        type.setText(category.toString()); //TODO: zmienić sql tak, żeby tu była konkretna kategoria, a nie jej id
         difficulty.setText(""+asana.getDifficulty());
         if(asana.isDone()) iconDone.setVisibility(View.VISIBLE);
         else iconDone.setVisibility(View.INVISIBLE);

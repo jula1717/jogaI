@@ -28,6 +28,8 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         this.context=context;
     }
 
+    //TODO: to musi działać na polskich znakach
+
     public static synchronized JogaDbHelper getInstance(Context context){
         if(instance==null){
             instance = new JogaDbHelper(context.getApplicationContext());
