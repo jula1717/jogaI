@@ -89,6 +89,22 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         return asanas;
     }
 
+    public String getCategoryNameById(int categoryId) {
+        String categoryName="";
+        db = getReadableDatabase();
+
+        String[] selectionArgs = {String.valueOf(categoryId)};
+        Cursor c = db.rawQuery("SELECT " + Types.COLUMN_TYPE + " FROM " + JogaContract.Types.TABLE_NAME + " WHERE " + Types._ID + "=?", selectionArgs);
+
+        if (c.moveToFirst()) {
+        //    do {
+                categoryName = c.getString(c.getColumnIndexOrThrow(Types.COLUMN_TYPE));
+        //    } while (c.moveToNext());
+        }
+        c.close();
+        return categoryName;
+    }
+
     //fill tables, could comment later
 
     public void fillTypesTable(){
