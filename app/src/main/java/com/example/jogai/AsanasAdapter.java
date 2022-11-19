@@ -18,30 +18,30 @@ import java.util.List;
 public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasViewHolder>{
     List<Asana> asanas;
     Context context;
-    Cursor cursor;
 
-    public AsanasAdapter(Context context, Cursor cursor) {
+    public AsanasAdapter(Context context, List <Asana> asanas) {
         this.context = context;
-        this.cursor = cursor;
+        this.asanas = asanas;
     }
 
     @Override
     public void onBindViewHolder(@NonNull AsanasViewHolder holder, int position) {
-        if(!cursor.moveToPosition(position)){
-            return;
-        }
-        else{
-//            long id = cursor.getLong(cursor.getColumnIndexOrThrow(GroceryEntry._ID));
-//            holder.itemView.setTag(id);
-            String sanskritName = cursor.getString(cursor.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_SANSKRIT_NAME));
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_NAME));
-            byte[] imageByteArray = cursor.getBlob(cursor.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE));
-            Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageByteArray,0,imageByteArray.length);
+        Asana asana = asanas.get(position);
+            String sanskritName = asana.getSanskritName();
+            String name = asana.getName();
+            Bitmap imageBitmap = BitmapFactory.decodeByteArray(asana.getImage(),0,asana.getImage().length);
             holder.txtName.setText(name);
             holder.txtSanskritName.setText(sanskritName);
             int drawableResourceId = context.getResources().getIdentifier("ic_done", "drawable", context.getPackageName());
             holder.imgIconDone.setImageResource(drawableResourceId);
             holder.imgAsanaImage.setImageBitmap(imageBitmap);
+
+        if(asana.isDone()){
+            holder.imgIconDone.setColorFilter(context.getResources().getColor(R.color.teal_200));
+            holder.imgAsanaImage.setColorFilter(context.getResources().getColor(R.color.teal_200));
+        }else{
+            holder.imgIconDone.setColorFilter(context.getResources().getColor(R.color.gray));
+            holder.imgAsanaImage.setColorFilter(context.getResources().getColor(R.color.gray));
         }
     }
 
@@ -50,19 +50,10 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
-    public void swapCursor(Cursor newCursor){
-        if(cursor!=null){
-            cursor.close();
-        }
-        cursor=newCursor;
-        if(newCursor!=null){
-            notifyDataSetChanged();
-        }
-    }
 
     @Override
     public int getItemCount() {
-        return cursor.getCount();
+         return asanas.size();
     }
     @NonNull
     @Override
@@ -97,7 +88,7 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
                     {
                         int position = getAbsoluteAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION){
-                            listener.onDoneClicked(position,imgIconDone);
+                            listener.onDoneClicked(position,imgIconDone,imgAsanaImage);
                         }
                     }
                     return true;
@@ -119,7 +110,7 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
     }
     interface  OnItemClickListener{
         public void onItemClicked(int position);
-        public void onDoneClicked(int position, ImageView imgIconDone);
+        public void onDoneClicked(int position, ImageView imgIconDone, ImageView imgAsana);
     }
 
 }
