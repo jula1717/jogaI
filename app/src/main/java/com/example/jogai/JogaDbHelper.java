@@ -71,30 +71,32 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     }
 
 
-    //sorted by difficulty
-    public ArrayList<Asana> getSortedAsanas(String columnSortBy){
-        ArrayList<Asana> asanas = new ArrayList<>();
-        db = getReadableDatabase();
-
-        String [] selectionsArgs = {columnSortBy};
-        //Cursor c = db.rawQuery("SELECT * FROM "+ JogaContract.Asana.TABLE_NAME+" ORDER BY ?",selectionsArgs);
-        Cursor c = db.query(JogaContract.Asana.TABLE_NAME,null,null,null,null,null,JogaContract.Asana.COLUMN_SANSKRIT_NAME);
-
-        if(c.moveToFirst()){
-            do{
-                Asana asana = new Asana();
-                asana.setName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_NAME)));
-                asana.setSanskritName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_SANSKRIT_NAME)));
-                asana.setDescription(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DESCRIPTION)));
-                asana.setDifficulty((byte) c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DIFFICULTY)));
-                asana.setImage(c.getBlob(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE)));
-                asana.setColumnTypeId(c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID)));
-                asanas.add(asana);
-            }while(c.moveToNext());
-        }
-        c.close();
-        return asanas;
-    }
+//    //sorted by difficulty
+//    public ArrayList<Asana> getSortedAsanas(String columnSortBy){
+//        ArrayList<Asana> asanas = new ArrayList<>();
+//        db = getReadableDatabase();
+//
+//        String [] selectionsArgs = {columnSortBy};
+//        //Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Asana.TABLE_NAME+ " ORDER BY ?",selectionsArgs);
+//        Cursor c = db.query(JogaContract.Asana.TABLE_NAME,null,null,null,null,null,null);
+////      rawQuery("SELECT * FROM "+QuestionT.TABLE_NAME+" WHERE "+QuestionT.COLUMN_DIFFICULTY+"=?",selectionArgs);
+//        if(c.moveToFirst()){
+//            do{
+//                Asana asana = new Asana();
+//                asana.setName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_NAME)));
+//                asana.setSanskritName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_SANSKRIT_NAME)));
+//                asana.setDescription(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DESCRIPTION)));
+//                asana.setDifficulty((byte) c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DIFFICULTY)));
+//                asana.setImage(c.getBlob(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE)));
+//                boolean value = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DONE)) > 0;
+//                asana.setDone(value);
+//                asana.setColumnTypeId(c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID)));
+//                asanas.add(asana);
+//            }while(c.moveToNext());
+//        }
+//        c.close();
+//        return asanas;
+//    }
 
     public String getCategoryNameById(int categoryId) {
         String categoryName="";
@@ -110,10 +112,58 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         return categoryName;
     }
 
+    public Asana getAsana(int id){
+        db = getWritableDatabase();
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Asana.TABLE_NAME + " WHERE " + JogaContract.Asana._ID + "=?",selectionArgs);
+        Asana asana = new Asana();
+        if(c.moveToFirst()){
+            do{
+                asana.setName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_NAME)));
+                asana.setSanskritName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_SANSKRIT_NAME)));
+                asana.setDescription(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DESCRIPTION)));
+                asana.setDifficulty((byte) c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DIFFICULTY)));
+                asana.setImage(c.getBlob(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE)));
+                boolean value = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DONE)) > 0;
+                asana.setDone(value);
+                asana.setColumnTypeId(c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID)));
+            }while(c.moveToNext());
+        }
+        c.close();
+        return asana;
+
+    }
+
+    public int countAsanas(){
+        db = getWritableDatabase();
+        final String COUNT_COLUMN = "count_column";
+        Cursor c = db.rawQuery("SELECT COUNT(*) AS "+COUNT_COLUMN+" FROM " + JogaContract.Asana.TABLE_NAME,null);
+        int number;
+        if (c.moveToFirst()) {
+            number = c.getInt(c.getColumnIndexOrThrow(COUNT_COLUMN));
+        }else {
+            number = 0;
+        }
+        c.close();
+        return number;
+    }
+
     public void changeAsanaState(int position, boolean newState) {
         db = getWritableDatabase();
-        String[] selectionArgs = {String.valueOf(position+1),String.valueOf(newState)};
-        Cursor c = db.rawQuery("UPDATE " + JogaContract.Asana.TABLE_NAME + " SET " + JogaContract.Asana.COLUMN_DONE + "=?" + " WHERE " + JogaContract.Asana._ID + "=?", selectionArgs);
+//        int state= 0;
+//        if(newState) state = 1;
+//        String[] selectionArgs = {String.valueOf(position+1),String.valueOf(newState)};
+//        Cursor c = db.rawQuery("UPDATE " + JogaContract.Asana.TABLE_NAME + " SET " + JogaContract.Asana.COLUMN_DONE + "=?" + " WHERE " + JogaContract.Asana._ID + "=?", selectionArgs);
+        String[] selectionArgs = {String.valueOf(position+1)};
+        Cursor c;
+        if(newState){
+            c = db.rawQuery("UPDATE " + JogaContract.Asana.TABLE_NAME + " SET " + JogaContract.Asana.COLUMN_DONE + "=1" + " WHERE " + JogaContract.Asana._ID + "=?", selectionArgs);
+        }
+        else{
+            c = db.rawQuery("UPDATE " + JogaContract.Asana.TABLE_NAME + " SET " + JogaContract.Asana.COLUMN_DONE + "=0" + " WHERE " + JogaContract.Asana._ID + "=?", selectionArgs);
+        }
+        c.moveToFirst();
+        c.close();
     }
 
 
@@ -144,18 +194,38 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     }
 
     public void fillAsanasTable(){
-        String descriptionMalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In finibus lectus sed ligula mollis ultricies. Suspendisse et libero ut risus tincidunt hendrerit a ut nisl. In hac habitasse platea dictumst. Aenean at commodo est. Nunc egestas aliquam elementum. Nulla mollis.";
-        Bitmap bitmapMalasana=BitmapFactory.decodeResource(context.getResources(), R.drawable.malasana);
-        byte[] imageMalasana = getBitmapAsByteArray(bitmapMalasana); // this is a function
-        Asana a1= new Asana("Malasana","Girlanda",imageMalasana,descriptionMalasana,AsanaType.POZYCJA_STOJACA, (byte) 2,true);
-        insertAsana(a1);
+//        for(int i = 0 ; i<12;i++){
+            String descriptionChair="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+            Bitmap bitmapChair=BitmapFactory.decodeResource(context.getResources(),R.drawable.chair);
+            byte[] imageChair = getBitmapAsByteArray(bitmapChair); // this is a function
+            Asana a1= new Asana("Utkatasana","Krzesło",imageChair,descriptionChair,AsanaType.POZYCJA_STOJACA, (byte) 1,false);
+            insertAsana(a1);
 
-        String descriptionBalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-        Bitmap bitmapBalasana=BitmapFactory.decodeResource(context.getResources(),R.drawable.balasana);
-        byte[] imageBalasana = getBitmapAsByteArray(bitmapBalasana); // this is a function
-        Asana a2= new Asana("Balasana","Dziecko",imageBalasana,descriptionBalasana,AsanaType.POZYCJA_RELAKSACYJNA, (byte) 1,true);
-        insertAsana(a2);
-        //TODO:zmienić na vector assety, żeby sprawdzić przezroczystość i zmianę koloru
+            String descriptionCamel="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+            Bitmap bitmapCamel=BitmapFactory.decodeResource(context.getResources(),R.drawable.camel);
+            byte[] imageCamel = getBitmapAsByteArray(bitmapCamel); // this is a function
+            Asana a2= new Asana("Ustrasana","Wielbłąd",imageCamel,descriptionCamel,AsanaType.WYGIECIE_DO_TYLU, (byte) 2,true);
+            insertAsana(a2);
+
+            String descriptionChair2="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+            Bitmap bitmapChair2=BitmapFactory.decodeResource(context.getResources(),R.drawable.chair2);
+            byte[] imageChair2 = getBitmapAsByteArray(bitmapChair2); // this is a function
+            Asana a3= new Asana("Utkatasana","Krzesło",imageChair2,descriptionChair,AsanaType.POZYCJA_STOJACA, (byte) 1,true);
+            insertAsana(a3);
+
+            String descriptionCamel2="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+            Bitmap bitmapCamel2=BitmapFactory.decodeResource(context.getResources(),R.drawable.camel2);
+            byte[] imageCamel2 = getBitmapAsByteArray(bitmapCamel2); // this is a function
+            Asana a4= new Asana("Ustrasana","Wielbłąd",imageCamel2,descriptionCamel,AsanaType.WYGIECIE_DO_TYLU, (byte) 2,false);
+            insertAsana(a4);
+//        }
+
+//        String descriptionBalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+//        Bitmap bitmapBalasana=BitmapFactory.decodeResource(context.getResources(),R.drawable.balasana);
+//        byte[] imageBalasana = getBitmapAsByteArray(bitmapBalasana); // this is a function
+//        Asana a2= new Asana("Balasana","Dziecko",imageBalasana,descriptionBalasana,AsanaType.POZYCJA_RELAKSACYJNA, (byte) 1,false);
+//        insertAsana(a2);
+
     }
 
     //To store a image in to db

@@ -61,7 +61,7 @@ public class AsanaFragment extends Fragment {
         description.setText(asana.getDescription());
         dbHelper = JogaDbHelper.getInstance(context);
         String category = dbHelper.getCategoryNameById(asana.getColumnTypeId());
-        type.setText(category.toString()); //TODO: zmienić sql tak, żeby tu była konkretna kategoria, a nie jej id
+        type.setText(category.toString());
         difficulty.setText(""+asana.getDifficulty());
         if(asana.isDone()) iconDone.setVisibility(View.VISIBLE);
         else iconDone.setVisibility(View.INVISIBLE);
@@ -71,7 +71,6 @@ public class AsanaFragment extends Fragment {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO:dodać animację
                 image.setVisibility(View.INVISIBLE);
                 details.setVisibility(View.VISIBLE);
             }
