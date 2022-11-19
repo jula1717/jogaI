@@ -12,7 +12,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.example.jogai.comparators.DoneComparator;
+import com.example.jogai.comparators.NameComparator;
+import com.example.jogai.comparators.SanskritComparator;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 //        adapter = new AsanasAdapter(getApplicationContext(),asanas);
 //        adapter= new AsanasAdapter(getApplicationContext(), getAllAsanas(columnSortBy));
         getAllAsanas();
+        Comparator comparator = new DoneComparator();
+        Collections.sort(asanas, comparator);
         adapter= new AsanasAdapter(getApplicationContext(),asanas);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setAdapter(adapter);
