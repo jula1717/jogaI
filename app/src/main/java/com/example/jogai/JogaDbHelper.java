@@ -70,34 +70,6 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-
-//    //sorted by difficulty
-//    public ArrayList<Asana> getSortedAsanas(String columnSortBy){
-//        ArrayList<Asana> asanas = new ArrayList<>();
-//        db = getReadableDatabase();
-//
-//        String [] selectionsArgs = {columnSortBy};
-//        //Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Asana.TABLE_NAME+ " ORDER BY ?",selectionsArgs);
-//        Cursor c = db.query(JogaContract.Asana.TABLE_NAME,null,null,null,null,null,null);
-////      rawQuery("SELECT * FROM "+QuestionT.TABLE_NAME+" WHERE "+QuestionT.COLUMN_DIFFICULTY+"=?",selectionArgs);
-//        if(c.moveToFirst()){
-//            do{
-//                Asana asana = new Asana();
-//                asana.setName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_NAME)));
-//                asana.setSanskritName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_SANSKRIT_NAME)));
-//                asana.setDescription(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DESCRIPTION)));
-//                asana.setDifficulty((byte) c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DIFFICULTY)));
-//                asana.setImage(c.getBlob(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE)));
-//                boolean value = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DONE)) > 0;
-//                asana.setDone(value);
-//                asana.setColumnTypeId(c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID)));
-//                asanas.add(asana);
-//            }while(c.moveToNext());
-//        }
-//        c.close();
-//        return asanas;
-//    }
-
     public String getCategoryNameById(int categoryId) {
         String categoryName="";
         db = getReadableDatabase();
@@ -150,10 +122,6 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     public void changeAsanaState(int position, boolean newState) {
         db = getWritableDatabase();
-//        int state= 0;
-//        if(newState) state = 1;
-//        String[] selectionArgs = {String.valueOf(position+1),String.valueOf(newState)};
-//        Cursor c = db.rawQuery("UPDATE " + JogaContract.Asana.TABLE_NAME + " SET " + JogaContract.Asana.COLUMN_DONE + "=?" + " WHERE " + JogaContract.Asana._ID + "=?", selectionArgs);
         String[] selectionArgs = {String.valueOf(position+1)};
         Cursor c;
         if(newState){
@@ -165,8 +133,6 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         c.moveToFirst();
         c.close();
     }
-
-
 
     //fill tables, could comment later
 
@@ -218,14 +184,6 @@ public class JogaDbHelper extends SQLiteOpenHelper {
             byte[] imageCamel2 = getBitmapAsByteArray(bitmapCamel2); // this is a function
             Asana a4= new Asana("Ustrasana","Wielbłąd",imageCamel2,descriptionCamel,AsanaType.WYGIECIE_DO_TYLU, (byte) 2,false);
             insertAsana(a4);
-//        }
-
-//        String descriptionBalasana="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-//        Bitmap bitmapBalasana=BitmapFactory.decodeResource(context.getResources(),R.drawable.balasana);
-//        byte[] imageBalasana = getBitmapAsByteArray(bitmapBalasana); // this is a function
-//        Asana a2= new Asana("Balasana","Dziecko",imageBalasana,descriptionBalasana,AsanaType.POZYCJA_RELAKSACYJNA, (byte) 1,false);
-//        insertAsana(a2);
-
     }
 
     //To store a image in to db

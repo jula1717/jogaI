@@ -1,6 +1,7 @@
 package com.example.jogai;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -67,12 +68,19 @@ public class AsanaFragment extends Fragment {
         else iconDone.setVisibility(View.INVISIBLE);
         image.setImageBitmap(BitmapFactory.decodeByteArray(asana.getImage(), 0, asana.getImage().length));
         image.setVisibility(View.VISIBLE);
-        details.setVisibility(View.INVISIBLE);
+        description.setVisibility(View.INVISIBLE);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 image.setVisibility(View.INVISIBLE);
-                details.setVisibility(View.VISIBLE);
+                description.setVisibility(View.VISIBLE);
+            }
+        });
+        description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image.setVisibility(View.VISIBLE);
+                description.setVisibility(View.INVISIBLE);
             }
         });
         return view;
