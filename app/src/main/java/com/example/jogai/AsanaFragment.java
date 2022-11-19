@@ -64,8 +64,14 @@ public class AsanaFragment extends Fragment {
         String category = dbHelper.getCategoryNameById(asana.getColumnTypeId());
         type.setText(category.toString());
         difficulty.setText(""+asana.getDifficulty());
-        if(asana.isDone()) iconDone.setVisibility(View.VISIBLE);
-        else iconDone.setVisibility(View.INVISIBLE);
+        if(asana.isDone()) {
+            iconDone.setVisibility(View.VISIBLE);
+            iconDone.setColorFilter(context.getResources().getColor(R.color.teal_200));
+        }
+        else {
+            iconDone.setVisibility(View.INVISIBLE);
+            iconDone.setColorFilter(context.getResources().getColor(R.color.gray));
+        }
         image.setImageBitmap(BitmapFactory.decodeByteArray(asana.getImage(), 0, asana.getImage().length));
         image.setVisibility(View.VISIBLE);
         description.setVisibility(View.INVISIBLE);
