@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClicked(int position) {
                 recyclerView.setVisibility(View.GONE);
                 AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position),getApplicationContext());
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment).addToBackStack("my_fragment").commit();
             }
 
             @Override
@@ -81,6 +81,20 @@ public class MainActivity extends AppCompatActivity {
         for(int i=1;i<=number;i++){
             asanas.add(dbHelper.getAsana(i));
         }
+    }
+    @Override
+    public void onBackPressed() {
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+        recyclerView.setVisibility(View.VISIBLE);
+
     }
 
 }
