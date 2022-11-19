@@ -1,5 +1,6 @@
 package com.example.jogai;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,13 +9,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.ColorFilter;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.example.jogai.comparators.DifficultyComparator;
 import com.example.jogai.comparators.DoneComparator;
 import com.example.jogai.comparators.NameComparator;
 import com.example.jogai.comparators.SanskritComparator;
+import com.example.jogai.comparators.TypeComparator;
+import com.example.jogai.comparators.UndoneComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,4 +112,55 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.dark_theme:
+                return true;
+            case R.id.sort_difficulty: {
+                Comparator comparator = new DifficultyComparator();
+                mySort(comparator);
+                return true;
+            }
+            case R.id.sort_done: {
+                Comparator comparator = new DoneComparator();
+                mySort(comparator);
+                return true;
+            }
+            case R.id.sort_name: {
+                Comparator comparator = new NameComparator();
+                mySort(comparator);
+                return true;
+            }
+            case R.id.sort_sanskrit: {
+                Comparator comparator = new SanskritComparator();
+                mySort(comparator);
+                return true;
+            }
+            case R.id.sort_type: {
+                Comparator comparator = new TypeComparator();
+                mySort(comparator);
+                return true;
+            }
+            case R.id.sort_undone: {
+                Comparator comparator = new UndoneComparator();
+                mySort(comparator);
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void mySort(Comparator comparator) {
+        Collections.sort(asanas, comparator);
+        adapter.notifyDataSetChanged();
+    }
 }
