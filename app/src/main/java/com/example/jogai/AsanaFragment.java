@@ -56,6 +56,7 @@ public class AsanaFragment extends Fragment {
         description.setMovementMethod(new ScrollingMovementMethod());
         iconDone = view.findViewById(R.id.iconDone);
         image = view.findViewById(R.id.asanaImg);
+        image.setColorFilter(getResources().getColor(R.color.dark_gray));
         if(getArguments()!=null){
             asana = getArguments().getParcelable(ARG_ASANA);
         }

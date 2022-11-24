@@ -40,8 +40,8 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
             holder.imgIconDone.setColorFilter(context.getResources().getColor(R.color.teal_200));
             holder.imgAsanaImage.setColorFilter(context.getResources().getColor(R.color.teal_200));
         }else{
-            holder.imgIconDone.setColorFilter(context.getResources().getColor(R.color.gray));
-            holder.imgAsanaImage.setColorFilter(context.getResources().getColor(R.color.gray));
+            holder.imgIconDone.setColorFilter(context.getResources().getColor(R.color.dark_gray));
+            holder.imgAsanaImage.setColorFilter(context.getResources().getColor(R.color.dark_gray));
         }
     }
 
