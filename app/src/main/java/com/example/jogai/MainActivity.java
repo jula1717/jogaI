@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
     JogaDbHelper dbHelper;
     ArrayList<Asana> asanas;
 
+    //sort type
+    int comparatorNumber=2;
+    public static final String KEY_COMPARATOR = "com.example.jogai.MainActivity.KEY_COMPARATOR";
+
     //dark mode
     boolean nightmode;
     SharedPreferences sharedPreferences;
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         loadData();
         dbHelper = JogaDbHelper.getInstance(this);
         db = dbHelper.getWritableDatabase();
-        if(asanas==null){
+        if(asanas==null) {
             getAllAsanas();
         }
         recyclerView = findViewById(R.id.recyclerView);
@@ -68,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
         Comparator comparator = new DoneComparator();
         Collections.sort(asanas, comparator);
         adapter= new AsanasAdapter(getApplicationContext(),asanas);
+        if(savedInstanceState!=null){
+            comparatorNumber = savedInstanceState.getInt(KEY_COMPARATOR,2);
+        }
+        mySort(comparatorNumber);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -117,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String json = gson.toJson(asanas);
         editor.putString(KEY_ASANAS_LIST,json);
+        editor.putInt(KEY_COMPARATOR,comparatorNumber);
         editor.apply();
     }
 
@@ -124,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences("ASANAS",MODE_PRIVATE);
         String json = sharedPreferences.getString(KEY_ASANAS_LIST,null);
+        comparatorNumber = sharedPreferences.getInt(KEY_COMPARATOR,2);
         Type type = new TypeToken<ArrayList<Asana>>(){}.getType();
         asanas = gson.fromJson(json,type);
     }
@@ -166,32 +176,33 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.sort_difficulty: {
                 Comparator comparator = new DifficultyComparator();
-                mySort(comparator);
+                comparatorNumber = 1;
+                mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_done: {
-                Comparator comparator = new DoneComparator();
-                mySort(comparator);
+                comparatorNumber = 2;
+                mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_name: {
-                Comparator comparator = new NameComparator();
-                mySort(comparator);
+                comparatorNumber = 3;
+                mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_sanskrit: {
-                Comparator comparator = new SanskritComparator();
-                mySort(comparator);
+                comparatorNumber = 4;
+                mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_type: {
-                Comparator comparator = new TypeComparator();
-                mySort(comparator);
+                comparatorNumber = 5;
+                mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_undone: {
-                Comparator comparator = new UndoneComparator();
-                mySort(comparator);
+                comparatorNumber = 6;
+                mySort(comparatorNumber);
                 return true;
             }
             default:
@@ -222,7 +233,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void mySort(Comparator comparator) {
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_COMPARATOR,comparatorNumber);
+
+    }
+
+    private void mySort(int comparatorNumber) {
+        Comparator comparator;
+        switch (comparatorNumber){
+            case 1:
+            default:
+                comparator = new DifficultyComparator();
+                break;
+            case 2:
+                comparator = new DoneComparator();
+                break;
+            case 3:
+                comparator = new NameComparator();
+                break;
+            case 4:
+                comparator = new SanskritComparator();
+                break;
+            case 5:
+                comparator = new TypeComparator();
+                break;
+            case 6:
+                comparator = new UndoneComparator();
+                break;
+        }
         Collections.sort(asanas, comparator);
         adapter.notifyDataSetChanged();
         saveData();
