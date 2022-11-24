@@ -3,6 +3,7 @@ package com.example.jogai;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.jogai.comparators.DifficultyComparator;
 import com.example.jogai.comparators.DoneComparator;
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.frameLayout,fragment).addToBackStack("my_fragment").commit();
+                transaction.replace(R.id.frameLayout,fragment).addToBackStack("asana_fragment").commit();
             }
 
             @Override
@@ -207,6 +209,22 @@ public class MainActivity extends AppCompatActivity {
             case R.id.sort_undone: {
                 comparatorNumber = 6;
                 mySort(comparatorNumber);
+                return true;
+            }
+            case R.id.achievements:{
+                Fragment progressFragment = ProgressFragment.newInstance(asanas,getApplicationContext());
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
+                transaction.replace(R.id.frameLayout,progressFragment).addToBackStack("progress_fragment").commit();
+                return true;
+            }
+            case R.id.about:{
+                Fragment aboutFragment = new AboutFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
+                transaction.replace(R.id.frameLayout,aboutFragment).addToBackStack("about_fragment").commit();
                 return true;
             }
             default:
