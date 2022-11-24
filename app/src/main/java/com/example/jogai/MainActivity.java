@@ -26,7 +26,10 @@ import com.example.jogai.comparators.NameComparator;
 import com.example.jogai.comparators.SanskritComparator;
 import com.example.jogai.comparators.TypeComparator;
 import com.example.jogai.comparators.UndoneComparator;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,21 +41,26 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     AsanasAdapter adapter;
     JogaDbHelper dbHelper;
-    ArrayList<Asana> asanas = new ArrayList<>();
+    ArrayList<Asana> asanas;
 
     //dark mode
     boolean nightmode;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    public static final String KEY_ASANAS_LIST = "com.example.jogai.MainActivity.KEY_ASANAS_LIST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
+        loadData();
         dbHelper = JogaDbHelper.getInstance(this);
         db = dbHelper.getWritableDatabase();
+        if(asanas==null){
+            getAllAsanas();
+        }
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
         String columnSortBy = JogaContract.Asana.COLUMN_SANSKRIT_NAME;
 //        asanas=dbHelper.getSortedAsanas(columnSortBy);
 //        adapter = new AsanasAdapter(getApplicationContext(),asanas);
@@ -100,9 +108,28 @@ public class MainActivity extends AppCompatActivity {
             imgAsana.setColorFilter(getResources().getColor(R.color.gray));
         }
         adapter.notifyDataSetChanged();
+        saveData();
+    }
+
+    private void saveData(){
+        Gson gson = new Gson();
+        SharedPreferences sharedPreferences = getSharedPreferences("ASANAS",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String json = gson.toJson(asanas);
+        editor.putString(KEY_ASANAS_LIST,json);
+        editor.apply();
+    }
+
+    private void loadData(){
+        Gson gson = new Gson();
+        SharedPreferences sharedPreferences = getSharedPreferences("ASANAS",MODE_PRIVATE);
+        String json = sharedPreferences.getString(KEY_ASANAS_LIST,null);
+        Type type = new TypeToken<ArrayList<Asana>>(){}.getType();
+        asanas = gson.fromJson(json,type);
     }
 
     private void getAllAsanas(){
+        asanas = new ArrayList<>();
         db = dbHelper.getWritableDatabase();
         int number = dbHelper.countAsanas();
         for(int i=1;i<=number;i++){
@@ -195,10 +222,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void mySort(Comparator comparator) {
         Collections.sort(asanas, comparator);
         adapter.notifyDataSetChanged();
+        saveData();
     }
 }
