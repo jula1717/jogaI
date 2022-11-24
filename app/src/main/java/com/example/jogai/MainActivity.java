@@ -90,11 +90,10 @@ public class MainActivity extends AppCompatActivity {
         adapter.setListener(new AsanasAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position) {
-                recyclerView.setVisibility(View.GONE);
                 AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position),getApplicationContext());
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                //transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
                 transaction.replace(R.id.frameLayout,fragment).addToBackStack("my_fragment").commit();
             }
 
