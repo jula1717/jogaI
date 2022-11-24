@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
 //        asanas=dbHelper.getSortedAsanas(columnSortBy);
 //        adapter = new AsanasAdapter(getApplicationContext(),asanas);
 //        adapter= new AsanasAdapter(getApplicationContext(), getAllAsanas(columnSortBy));
-        getAllAsanas();
         Comparator comparator = new DoneComparator();
         Collections.sort(asanas, comparator);
         adapter= new AsanasAdapter(getApplicationContext(),asanas);
@@ -68,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
         //dark mode
         sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
         nightmode = sharedPreferences.getBoolean("night",false);
-
-
+        changeMode2();
 
         adapter.setListener(new AsanasAdapter.OnItemClickListener() {
             @Override
@@ -187,6 +185,17 @@ public class MainActivity extends AppCompatActivity {
         }
         editor.apply();
     }
+
+    private void changeMode2() {
+
+        if(nightmode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+
 
     private void mySort(Comparator comparator) {
         Collections.sort(asanas, comparator);
