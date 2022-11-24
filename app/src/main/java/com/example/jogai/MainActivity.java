@@ -2,9 +2,12 @@ package com.example.jogai;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.ColorFilter;
@@ -15,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.example.jogai.comparators.DifficultyComparator;
 import com.example.jogai.comparators.DoneComparator;
@@ -36,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     JogaDbHelper dbHelper;
     ArrayList<Asana> asanas = new ArrayList<>();
 
+    //dark mode
+    boolean nightmode;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+
+        //dark mode
+        sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        nightmode = sharedPreferences.getBoolean("night",false);
+
 
 
         adapter.setListener(new AsanasAdapter.OnItemClickListener() {
@@ -123,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.dark_theme:
+                changeMode();
                 return true;
             case R.id.sort_difficulty: {
                 Comparator comparator = new DifficultyComparator();
@@ -157,6 +172,20 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void changeMode() {
+
+        if(nightmode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor = sharedPreferences.edit();
+            editor.putBoolean("night",false);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor = sharedPreferences.edit();
+            editor.putBoolean("night",true);
+        }
+        editor.apply();
     }
 
     private void mySort(Comparator comparator) {
