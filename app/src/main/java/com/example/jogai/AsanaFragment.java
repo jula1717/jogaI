@@ -9,6 +9,8 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -78,15 +80,20 @@ public class AsanaFragment extends Fragment {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                image.setVisibility(View.INVISIBLE);
-                description.setVisibility(View.VISIBLE);
+                image.startAnimation(AnimationUtils.loadAnimation(context,R.anim.zoom_out));
+                description.startAnimation(AnimationUtils.loadAnimation(context,R.anim.zoom_in));
+//                image.setEnabled(false);
+//                image.setVisibility(View.INVISIBLE);
+//                description.setVisibility(View.VISIBLE);
             }
         });
         description.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                image.setVisibility(View.VISIBLE);
-                description.setVisibility(View.INVISIBLE);
+                image.startAnimation(AnimationUtils.loadAnimation(context,R.anim.zoom_in));
+                description.startAnimation(AnimationUtils.loadAnimation(context,R.anim.zoom_out));
+//                image.setVisibility(View.VISIBLE);
+//                description.setVisibility(View.INVISIBLE);
             }
         });
         return view;
