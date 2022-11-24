@@ -3,6 +3,8 @@ package com.example.jogai;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -90,7 +92,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClicked(int position) {
                 recyclerView.setVisibility(View.GONE);
                 AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position),getApplicationContext());
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,fragment).addToBackStack("my_fragment").commit();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                //transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
+                transaction.replace(R.id.frameLayout,fragment).addToBackStack("my_fragment").commit();
             }
 
             @Override
