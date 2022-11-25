@@ -1,7 +1,6 @@
 package com.example.jogai;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -58,7 +57,7 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
     @NonNull
     @Override
     public AsanasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_single_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_single_asana,parent,false);
         AsanasViewHolder holder = new AsanasViewHolder(view,this.listener);
         return holder;
     }
