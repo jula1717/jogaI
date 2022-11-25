@@ -15,14 +15,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import java.util.ArrayList;
 
 public class ProgressFragment extends Fragment {
     public static final String ARG_ASANAS="asanas";
     private ArrayList<Asana> asanas;
+    private ArrayList<AsanaType> types;
     Context context;
     JogaDbHelper dbHelper;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    ProgressAdapter adapter;
 
     public static ProgressFragment newInstance(ArrayList<Asana> asanas, Context context){
         ProgressFragment fragment = new ProgressFragment();
@@ -41,11 +48,20 @@ public class ProgressFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.progress,container,false);
-        TextView textView;
-        textView = view.findViewById(R.id.textView);
         if(getArguments()!=null){
             asanas = getArguments().getParcelableArrayList(ARG_ASANAS);
         }
+        types = new ArrayList<AsanaType>();
+        types.add(new AsanaType("pozycje stojace"));
+        types.add(new AsanaType("pozycje siedzace"));
+        types.add(new AsanaType("pozycje lezace"));
+        types.add(new AsanaType("inne pozycje"));
+        recyclerView = view.findViewById(R.id.progressRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        adapter = new ProgressAdapter(types,context);
+        layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
 
         dbHelper = JogaDbHelper.getInstance(context);
         //tu wywołanie metody, która będzie obliczała progress i inicjalizacja gui tymi danymi
