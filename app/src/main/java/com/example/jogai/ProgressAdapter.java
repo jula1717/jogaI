@@ -36,6 +36,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         AsanaType type = types.get(position);
         String typeName = type.getType();
         holder.txtAsanaType.setText(typeName);
+        int imgRes = type.getImgRes();
+        holder.imgAsanaTypeImage.setImageResource(imgRes);
     }
 
     @Override

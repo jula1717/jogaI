@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=6;
+    public static final int DATABASE_VERSION=7;
     SQLiteDatabase db;
     Context context;
 
@@ -154,13 +154,13 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     //fill tables, could comment later
 
     public void fillTypesTable(){
-        AsanaType t1 = new AsanaType("pozycja stojąca",R.drawable.piesek);
+        AsanaType t1 = new AsanaType("pozycja stojąca",R.drawable.s1);
         insertType(t1);
-        AsanaType t2 = new AsanaType("pozycja siedząca",R.drawable.malasana);
+        AsanaType t2 = new AsanaType("pozycja siedząca",R.drawable.s2);
         insertType(t2);
-        AsanaType t3 = new AsanaType("skłon do przodu",R.drawable.balasana);
+        AsanaType t3 = new AsanaType("skłon do przodu",R.drawable.s3);
         insertType(t3);
-        AsanaType t4 = new AsanaType("wygięcie do tyłu",R.drawable.dog_niemiecki);
+        AsanaType t4 = new AsanaType("wygięcie do tyłu",R.drawable.s4);
         insertType(t4);
     }
 
