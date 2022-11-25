@@ -18,6 +18,7 @@ public class JogaContract {
     }
     public static final class Types implements BaseColumns{
         public static final String TABLE_NAME="types";
+        public static final String COLUMN_IMAGE_RESOURCE="image_resource";
         public static final String COLUMN_TYPE="type";
     }
 }

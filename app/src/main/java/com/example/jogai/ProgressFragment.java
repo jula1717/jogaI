@@ -52,10 +52,10 @@ public class ProgressFragment extends Fragment {
             asanas = getArguments().getParcelableArrayList(ARG_ASANAS);
         }
         types = new ArrayList<AsanaType>();
-        types.add(new AsanaType("pozycje stojace"));
-        types.add(new AsanaType("pozycje siedzace"));
-        types.add(new AsanaType("pozycje lezace"));
-        types.add(new AsanaType("inne pozycje"));
+//        types.add(new AsanaType("pozycje stojace"));
+//        types.add(new AsanaType("pozycje siedzace"));
+//        types.add(new AsanaType("pozycje lezace"));
+//        types.add(new AsanaType("inne pozycje"));
         recyclerView = view.findViewById(R.id.progressRecyclerView);
         recyclerView.setHasFixedSize(true);
         adapter = new ProgressAdapter(types,context);

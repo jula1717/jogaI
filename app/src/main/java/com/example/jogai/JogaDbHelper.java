@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=5;
+    public static final int DATABASE_VERSION=6;
     SQLiteDatabase db;
     Context context;
 
@@ -41,6 +41,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_TYPES_TABLE = "CREATE TABLE "
                 +JogaContract.Types.TABLE_NAME + " ("
                 +JogaContract.Types._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + Types.COLUMN_IMAGE_RESOURCE+" INTEGER, "
                 +JogaContract.Types.COLUMN_TYPE+" TEXT);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_TYPES_TABLE);
@@ -82,6 +83,22 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         }
         c.close();
         return categoryName;
+    }
+
+    public ArrayList<AsanaType> getTypes() {
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Types.TABLE_NAME,null);
+        ArrayList<AsanaType> types = new ArrayList<>();
+        if (c.moveToFirst()) {
+            do{
+                AsanaType type = new AsanaType();
+                type.setImgRes(c.getInt(c.getColumnIndexOrThrow(Types.COLUMN_IMAGE_RESOURCE)));
+                type.setType(c.getString(c.getColumnIndexOrThrow(Types.COLUMN_TYPE)));
+                types.add(type);
+            }while(c.moveToNext());
+        }
+        c.close();
+        return types;
     }
 
     public Asana getAsana(int id){
@@ -137,25 +154,20 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     //fill tables, could comment later
 
     public void fillTypesTable(){
-        AsanaType t1 = new AsanaType("pozycja stojąca");
+        AsanaType t1 = new AsanaType("pozycja stojąca",R.drawable.piesek);
         insertType(t1);
-        AsanaType t2 = new AsanaType("pozycja siedząca");
+        AsanaType t2 = new AsanaType("pozycja siedząca",R.drawable.malasana);
         insertType(t2);
-        AsanaType t3 = new AsanaType("skłon do przodu");
+        AsanaType t3 = new AsanaType("skłon do przodu",R.drawable.balasana);
         insertType(t3);
-        AsanaType t4 = new AsanaType("wygięcie do tyłu");
+        AsanaType t4 = new AsanaType("wygięcie do tyłu",R.drawable.dog_niemiecki);
         insertType(t4);
-        AsanaType t5 = new AsanaType("skręt tułowia");
-        insertType(t5);
-        AsanaType t6 = new AsanaType("pozycja odwrócona");
-        insertType(t6);
-        AsanaType t7 = new AsanaType("pozycja relaksacyjna");
-        insertType(t7);
     }
 
     private void insertType(AsanaType type) {
         ContentValues cv = new ContentValues();
         cv.put(Types.COLUMN_TYPE,type.getType());
+        cv.put(Types.COLUMN_IMAGE_RESOURCE,type.getImgRes());
         db.insert(Types.TABLE_NAME,null,cv);
     }
 

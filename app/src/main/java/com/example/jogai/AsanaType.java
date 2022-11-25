@@ -2,6 +2,7 @@ package com.example.jogai;
 
 public class AsanaType {
     String type;
+    int imgRes;
     int id;
 
     public static final int POZYCJA_STOJACA=1;
@@ -13,8 +14,12 @@ public class AsanaType {
     public static final int POZYCJA_RELAKSACYJNA=7;
 
 
-    public AsanaType(String type) {
+    public AsanaType() {
+    }
+
+    public AsanaType(String type, int imgRes) {
         this.type = type;
+        this.imgRes = imgRes;
     }
 
     public String getType() {
@@ -31,5 +36,13 @@ public class AsanaType {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getImgRes() {
+        return imgRes;
+    }
+
+    public void setImgRes(int imgRes) {
+        this.imgRes = imgRes;
     }
 }
