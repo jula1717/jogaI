@@ -28,21 +28,49 @@
                     android:id="@+id/asanaTypeTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
                     android:text="pozycje stojące"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     tools:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/asanaTypeImg"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="20dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    <ImageView
+                        android:id="@+id/asanaTypeImg"
+                        android:layout_weight="1"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <LinearLayout
+                        android:layout_gravity="right"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text="15"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text="/"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:textSize="20sp"
+                            android:layout_height="wrap_content"
+                            android:text="15"/>
+
+                    </LinearLayout>
 
                 <ProgressBar
-                    android:layout_margin="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:scaleY="2"
+                    android:layout_marginHorizontal="20dp"
                     android:id="@+id/asanaTypeProgressBar"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
