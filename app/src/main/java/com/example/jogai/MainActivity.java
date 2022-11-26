@@ -212,16 +212,22 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             case R.id.achievements:{
-                Fragment progressFragment = ProgressFragment.newInstance(asanas,getApplicationContext());
                 FragmentManager fragmentManager = getSupportFragmentManager();
+                if(isFragmentInBackstack(fragmentManager,"progress_fragment")){
+                    return true;
+                }
+                Fragment progressFragment = ProgressFragment.newInstance(asanas,getApplicationContext());
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
                 transaction.replace(R.id.frameLayout,progressFragment).addToBackStack("progress_fragment").commit();
                 return true;
             }
             case R.id.about:{
-                Fragment aboutFragment = new AboutFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
+                if(isFragmentInBackstack(fragmentManager,"about_fragment")){
+                    return true;
+                }
+                Fragment aboutFragment = new AboutFragment();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
                 transaction.replace(R.id.frameLayout,aboutFragment).addToBackStack("about_fragment").commit();
@@ -289,4 +295,14 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         saveData();
     }
+
+    public static boolean isFragmentInBackstack(final FragmentManager fragmentManager, final String fragmentTagName) {
+        for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++) {
+            if (fragmentTagName.equals(fragmentManager.getBackStackEntryAt(entry).getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
