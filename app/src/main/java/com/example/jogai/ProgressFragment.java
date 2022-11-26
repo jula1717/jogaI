@@ -1,21 +1,14 @@
 package com.example.jogai;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -55,12 +48,10 @@ public class ProgressFragment extends Fragment {
         types = dbHelper.getTypes();
         recyclerView = view.findViewById(R.id.progressRecyclerView);
         recyclerView.setHasFixedSize(true);
-        adapter = new ProgressAdapter(types,context);
+        adapter = new ProgressAdapter(types,context, dbHelper.countAllAmountSpecificType());
         layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
-
-        //tu wywołanie metody, która będzie obliczała progress i inicjalizacja gui tymi danymi
 
         return view;
     }

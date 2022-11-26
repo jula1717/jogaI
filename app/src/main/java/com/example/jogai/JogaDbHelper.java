@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+
 import com.example.jogai.JogaContract.*;
 
 import androidx.annotation.Nullable;
@@ -85,6 +87,49 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         return categoryName;
     }
 
+
+    public ArrayList<Point> countAllAmountSpecificType(){
+        db = getReadableDatabase();
+        final String COLUMN_QUANTITY = "quantity";
+        Cursor c = db.rawQuery("SELECT COUNT("+ JogaContract.Asana._ID+") AS "+COLUMN_QUANTITY+", "+
+                        JogaContract.Asana.COLUMN_TYPE_ID+" FROM "+JogaContract.Asana.TABLE_NAME+
+                " GROUP BY "+JogaContract.Asana.COLUMN_TYPE_ID,null);
+                //SELECT count(_id) AS ilosc, type FROM asanas GROUP BY type;
+        ArrayList<Point> progress = new ArrayList<>();
+        if(c.moveToFirst()){
+            do{
+                Point point = new Point();
+                int typeId = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID));
+                int quantity = c.getInt(c.getColumnIndexOrThrow(COLUMN_QUANTITY));
+                point.set(typeId,quantity);
+                progress.add(point);
+            }while(c.moveToNext());
+        }
+        c.close();
+        return progress;
+    }
+
+    public ArrayList<Point> countDoneAmountSpecificType(){
+        db = getReadableDatabase();
+        final String COLUMN_QUANTITY = "quantity";
+        String[] selectionArgs = {String.valueOf(1)};
+        Cursor c = db.rawQuery("SELECT "+ JogaContract.Asana.COLUMN_TYPE_ID +", COUNT("+ JogaContract.Asana._ID+") AS "+COLUMN_QUANTITY+" FROM "+JogaContract.Asana.TABLE_NAME+
+                " WHERE "+ JogaContract.Asana.COLUMN_DONE +"=? GROUP BY "+JogaContract.Asana.COLUMN_TYPE_ID,selectionArgs);
+        //SELECT type, count(_id) AS ilosc FROM asanas WHERE done=1 GROUP BY type;
+        ArrayList<Point> progress = new ArrayList<>();
+        if(c.moveToFirst()){
+            do{
+                Point point = new Point();
+                int typeId = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID));
+                int quantity = c.getInt(c.getColumnIndexOrThrow(COLUMN_QUANTITY));
+                point.set(typeId,quantity);
+                progress.add(point);
+            }while(c.moveToNext());
+        }
+        c.close();
+        return progress;
+    }
+
     public ArrayList<AsanaType> getTypes() {
         db = getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Types.TABLE_NAME,null);
@@ -94,6 +139,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
                 AsanaType type = new AsanaType();
                 type.setImgRes(c.getInt(c.getColumnIndexOrThrow(Types.COLUMN_IMAGE_RESOURCE)));
                 type.setType(c.getString(c.getColumnIndexOrThrow(Types.COLUMN_TYPE)));
+                type.setId(c.getInt(c.getColumnIndexOrThrow(Types._ID)));
                 types.add(type);
             }while(c.moveToNext());
         }
