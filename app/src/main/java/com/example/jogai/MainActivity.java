@@ -63,16 +63,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         loadData();
         dbHelper = JogaDbHelper.getInstance(this);
-        db = dbHelper.getWritableDatabase();
         if(asanas==null) {
             getAllAsanas();
         }
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        String columnSortBy = JogaContract.Asana.COLUMN_SANSKRIT_NAME;
-//        asanas=dbHelper.getSortedAsanas(columnSortBy);
-//        adapter = new AsanasAdapter(getApplicationContext(),asanas);
-//        adapter= new AsanasAdapter(getApplicationContext(), getAllAsanas(columnSortBy));
         Comparator comparator = new DoneComparator();
         Collections.sort(asanas, comparator);
         adapter= new AsanasAdapter(getApplicationContext(),asanas);
@@ -146,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void getAllAsanas(){
         asanas = new ArrayList<>();
-        db = dbHelper.getWritableDatabase();
         int number = dbHelper.countAsanas();
         for(int i=1;i<=number;i++){
             asanas.add(dbHelper.getAsana(i));

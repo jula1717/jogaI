@@ -48,7 +48,7 @@ public class ProgressFragment extends Fragment {
         types = dbHelper.getTypes();
         recyclerView = view.findViewById(R.id.progressRecyclerView);
         recyclerView.setHasFixedSize(true);
-        adapter = new ProgressAdapter(types,context, dbHelper.countAllAmountSpecificType());
+        adapter = new ProgressAdapter(types,context);
         layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);

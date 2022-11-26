@@ -24,10 +24,9 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
    List<Point> quantity;
    JogaDbHelper dbHelper;
 
-    public ProgressAdapter(List<AsanaType> types, Context context, List<Point> quantity) {
+    public ProgressAdapter(List<AsanaType> types, Context context) {
         this.types = types;
         this.context = context;
-        this.quantity = quantity;
         dbHelper = JogaDbHelper.getInstance(context);
     }
 
@@ -46,6 +45,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         holder.txtAsanaType.setText(typeName);
         int imgRes = type.getImgRes();
         holder.imgAsanaTypeImage.setImageResource(imgRes);
+        quantity = dbHelper.countAllAmountSpecificType();
         int allQuantity = 0;
         for (Point single:quantity) {
             if (single.x==type.getId()){
