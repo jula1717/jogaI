@@ -12,4 +12,5 @@
     <color name="light_gray">#aaaaaa</color>
     <color name="gray">#555555</color>
     <color name="dark_gray">#333333</color>
+    <color name="test">#33d312</color>
 </resources>
