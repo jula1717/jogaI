@@ -175,32 +175,37 @@ public class MainActivity extends AppCompatActivity {
                 changeMode();
                 return true;
             case R.id.sort_difficulty: {
-                Comparator comparator = new DifficultyComparator();
+                if(comparatorNumber==1) return true;
                 comparatorNumber = 1;
                 mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_done: {
+                if(comparatorNumber==2) return true;
                 comparatorNumber = 2;
                 mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_name: {
+                if(comparatorNumber==3) return true;
                 comparatorNumber = 3;
                 mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_sanskrit: {
+                if(comparatorNumber==4) return true;
                 comparatorNumber = 4;
                 mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_type: {
+                if(comparatorNumber==5) return true;
                 comparatorNumber = 5;
                 mySort(comparatorNumber);
                 return true;
             }
             case R.id.sort_undone: {
+                if(comparatorNumber==6) return true;
                 comparatorNumber = 6;
                 mySort(comparatorNumber);
                 return true;
