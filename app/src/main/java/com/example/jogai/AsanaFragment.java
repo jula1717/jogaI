@@ -40,8 +40,6 @@ public class AsanaFragment extends Fragment {
         View view = inflater.inflate(R.layout.asana,container,false);
         TextView sankritName,name,difficulty,type,description;
         ImageView iconDone,image;
-        LinearLayout details;
-        details = view.findViewById(R.id.detailsLayout);
         sankritName = view.findViewById(R.id.txtSanskritName);
         name = view.findViewById(R.id.txtSanskritName);
         difficulty = view.findViewById(R.id.txtDifficultyLevel);

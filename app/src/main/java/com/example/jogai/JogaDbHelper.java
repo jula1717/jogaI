@@ -203,29 +203,21 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     }
 
     public void fillAsanasTable() {
-        for(int i = 0 ; i<5;i++) {
             String descriptionChair = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-            AsanaModel a1 = new AsanaModel("Utkatasana", "Krzesło", descriptionChair, TypeModel.POZYCJA_STOJACA, (byte) 1, false, R.drawable.camel);
+            AsanaModel a1 = new AsanaModel("Utkatasana", "Krzesło", descriptionChair, TypeModel.POZYCJA_STOJACA, (byte) 1, false, R.drawable.chair);
             insertAsana(a1);
-        }
 
-//        String descriptionCamel = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-//        Bitmap bitmapCamel = BitmapFactory.decodeResource(context.getResources(), R.drawable.camel);
-//        byte[] imageCamel = getBitmapAsByteArray(bitmapCamel); // this is a function
-//        Asana a2 = new Asana("Ustrasana", "Wielbłąd", imageCamel, descriptionCamel, AsanaType.WYGIECIE_DO_TYLU, (byte) 2, true);
-//        insertAsana(a2);
-//
-//        String descriptionChair2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-//        Bitmap bitmapChair2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.chair2);
-//        byte[] imageChair2 = getBitmapAsByteArray(bitmapChair2); // this is a function
-//        Asana a3 = new Asana("Utkatasana", "Krzesło", imageChair2, descriptionChair, AsanaType.POZYCJA_STOJACA, (byte) 1, true);
-//        insertAsana(a3);
-//
-//        String descriptionCamel2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-//        Bitmap bitmapCamel2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.camel2);
-//        byte[] imageCamel2 = getBitmapAsByteArray(bitmapCamel2); // this is a function
-//        Asana a4 = new Asana("Ustrasana", "Wielbłąd", imageCamel2, descriptionCamel, AsanaType.WYGIECIE_DO_TYLU, (byte) 2, false);
-//        insertAsana(a4);
+        String descriptionChair2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+        AsanaModel a2 = new AsanaModel("Utkatasana", "Krzesło", descriptionChair2, TypeModel.POZYCJA_STOJACA, (byte) 1, false, R.drawable.chair2);
+        insertAsana(a2);
+
+        String descriptionCamel = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+        AsanaModel a3 = new AsanaModel("Ustrasana ", "Wielbłąd", descriptionCamel, TypeModel.WYGIECIE_DO_TYLU, (byte) 2, false, R.drawable.camel);
+        insertAsana(a3);
+
+        String descriptionCamel2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+        AsanaModel a4 = new AsanaModel("Ustrasana ", "Wielbłąd", descriptionCamel2, TypeModel.WYGIECIE_DO_TYLU, (byte) 2, false, R.drawable.camel2);
+        insertAsana(a4);
 
     }
 
@@ -241,12 +233,6 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         cv.put(Asanas.COLUMN_DIFFICULTY,asana.getDifficulty());
         cv.put(Asanas.COLUMN_DONE,asana.isDone());
         db.insert( Asanas.TABLE_NAME, null, cv );
-    }
-
-    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-        return outputStream.toByteArray();
     }
 
 }

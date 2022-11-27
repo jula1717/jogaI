@@ -44,12 +44,6 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
         }
     }
 
-    // convert from byte array to bitmap
-    public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
-    }
-
-
     @Override
     public int getItemCount() {
          return asanas.size();
@@ -67,7 +61,6 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
     public void setListener(OnItemClickListener listener) {
         this.listener = listener;
     }
-
 
     public static class AsanasViewHolder extends RecyclerView.ViewHolder {
         ImageView imgAsana;

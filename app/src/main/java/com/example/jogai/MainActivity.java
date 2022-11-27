@@ -36,7 +36,6 @@ import java.util.Comparator;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    SQLiteDatabase db;
     RecyclerView.LayoutManager layoutManager;
     AsanasAdapter adapter;
     JogaDbHelper dbHelper;
@@ -109,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         }
         asanas.get(position).setDone(newState);
         dbHelper.changeAsanaState(position,newState);
-        //ColorFilter colorFilter = imgAsana.getColorFilter();
         if(asanas.get(position).isDone()){
             imgIconDone.setColorFilter(getResources().getColor(R.color.teal_200));
             imgAsana.setColorFilter(getResources().getColor(R.color.teal_200));
@@ -144,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (count == 0) {
             super.onBackPressed();
-            //additional code
         } else {
             getSupportFragmentManager().popBackStack();
         }
