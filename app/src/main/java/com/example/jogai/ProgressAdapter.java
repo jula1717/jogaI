@@ -63,6 +63,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         anim.setDuration(1000);
         holder.pbAsanaType.setMax(allQuantity*1000);
         holder.pbAsanaType.startAnimation(anim);
+        holder.txtDone.setText(String.valueOf(doneQuantity));
+        holder.txtAll.setText(String.valueOf(allQuantity));
     }
 
     @Override
@@ -73,7 +75,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     public static class ProgressViewHolder extends RecyclerView.ViewHolder{
 
         ImageView imgAsanaTypeImage;
-        TextView txtAsanaType;
+        TextView txtAsanaType,txtDone,txtAll;
         ProgressBar pbAsanaType;
 
         public ProgressViewHolder(@NonNull View itemView) {
@@ -81,6 +83,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             imgAsanaTypeImage = itemView.findViewById(R.id.asanaTypeImg);
             txtAsanaType = itemView.findViewById(R.id.asanaTypeTxt);
             pbAsanaType = itemView.findViewById(R.id.asanaTypeProgressBar);
+            txtDone = itemView.findViewById(R.id.doneTxt);
+            txtAll = itemView.findViewById(R.id.allTxt);
         }
     }
 }
