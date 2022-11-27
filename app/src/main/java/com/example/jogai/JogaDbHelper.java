@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=2;
+    public static final int DATABASE_VERSION=3;
     SQLiteDatabase db;
     Context context;
 
@@ -185,13 +185,13 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     //fill tables, could comment later
 
     public void fillTypesTable(){
-        TypeModel t1 = new TypeModel("pozycja stojąca",R.drawable.s1);
+        TypeModel t1 = new TypeModel("pozycja stojąca",R.drawable.camel);
         insertType(t1);
-        TypeModel t2 = new TypeModel("pozycja siedząca",R.drawable.s2);
+        TypeModel t2 = new TypeModel("pozycja siedząca",R.drawable.camel2);
         insertType(t2);
-        TypeModel t3 = new TypeModel("skłon do przodu",R.drawable.s3);
+        TypeModel t3 = new TypeModel("skłon do przodu",R.drawable.chair);
         insertType(t3);
-        TypeModel t4 = new TypeModel("wygięcie do tyłu",R.drawable.s4);
+        TypeModel t4 = new TypeModel("wygięcie do tyłu",R.drawable.chair2);
         insertType(t4);
     }
 

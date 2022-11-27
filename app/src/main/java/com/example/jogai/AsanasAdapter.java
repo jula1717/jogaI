@@ -78,7 +78,7 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
             super(itemView);
             imgAsana = itemView.findViewById(R.id.imgAsana);
             txtSanskritName = itemView.findViewById(R.id.txtAsanaSanskritName);
-            txtName = itemView.findViewById(R.id.txtxAsanaName);
+            txtName = itemView.findViewById(R.id.txtAsanaName);
             imgDone = itemView.findViewById(R.id.doneIcon);
             imgDone.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

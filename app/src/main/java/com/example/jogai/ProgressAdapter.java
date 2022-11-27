@@ -70,7 +70,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         holder.txtDone.setText(String.valueOf(doneQuantity));
         holder.txtAll.setText(String.valueOf(allQuantity));
         if(allRegardlessOfType == doneRegardlessOfType){
-            StyleableToast.makeText(context,"Gratulacje! Znasz już wszystkie asany",Toast.LENGTH_SHORT,R.style.congratsToast).show();
+            StyleableToast.makeText(context, context.getString(R.string.congrats),Toast.LENGTH_SHORT,R.style.congratsToast).show();
         }
     }
 

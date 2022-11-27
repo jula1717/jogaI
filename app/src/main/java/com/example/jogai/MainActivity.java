@@ -51,11 +51,17 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     public static final String KEY_ASANAS_LIST = "com.example.jogai.MainActivity.KEY_ASANAS_LIST";
-
+    public static final String ABOUT_FRAGMENT_TAG = "com.example.jogai.MainActivity.ABOUT_FRAGMENT_TAG";
+    public static final String PROGRESS_FRAGMENT_TAG = "com.example.jogai.MainActivity.PROGRESS_FRAGMENT_TAG";
+    public static final String ASANA_FRAGMENT_TAG = "com.example.jogai.MainActivity.ASANA_FRAGMENT_TAG";
+    public static final String SHARED_PREFERENCES_KEY = "com.example.jogai.MainActivity.SHARED_PREFERENCES_KEY";
+    public static final String NIGHTMODE_KEY = "com.example.jogai.MainActivity.NIGHTMODE_KEY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         loadData();
         dbHelper = JogaDbHelper.getInstance(this);
         if(asanas==null) {
@@ -75,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //dark mode
-        sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
-        nightmode = sharedPreferences.getBoolean("night",false);
+
+        nightmode = sharedPreferences.getBoolean(NIGHTMODE_KEY,false);
         changeMode2();
 
         adapter.setListener(new AsanasAdapter.OnItemClickListener() {
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.fragmentContainer,fragment).addToBackStack("asana_fragment").commit();
+                transaction.replace(R.id.fragmentContainer,fragment).addToBackStack(ASANA_FRAGMENT_TAG).commit();
             }
 
             @Override
@@ -117,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveData(){
         Gson gson = new Gson();
-        SharedPreferences sharedPreferences = getSharedPreferences("ASANAS",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         String json = gson.toJson(asanas);
         editor.putString(KEY_ASANAS_LIST,json);
         editor.putInt(KEY_COMPARATOR,comparatorNumber);
@@ -127,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData(){
         Gson gson = new Gson();
-        SharedPreferences sharedPreferences = getSharedPreferences("ASANAS",MODE_PRIVATE);
         String json = sharedPreferences.getString(KEY_ASANAS_LIST,null);
         comparatorNumber = sharedPreferences.getInt(KEY_COMPARATOR,2);
         Type type = new TypeToken<ArrayList<AsanaModel>>(){}.getType();
@@ -200,30 +203,30 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.achievements:{
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                if(isFragmentInBackstack(fragmentManager,"progress_fragment")){
+                if(isFragmentInBackstack(fragmentManager,PROGRESS_FRAGMENT_TAG)){
                     return true;
                 }
-                if(isFragmentInBackstack(fragmentManager,"about_fragment")){
-                    fragmentManager.popBackStack ("about_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                if(isFragmentInBackstack(fragmentManager,ABOUT_FRAGMENT_TAG)){
+                    fragmentManager.popBackStack (ABOUT_FRAGMENT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
                 Fragment progressFragment = ProgressFragment.newInstance(getApplicationContext());
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.fragmentContainer,progressFragment).addToBackStack("progress_fragment").commit();
+                transaction.replace(R.id.fragmentContainer,progressFragment).addToBackStack(PROGRESS_FRAGMENT_TAG).commit();
                 return true;
             }
             case R.id.about:{
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                if(isFragmentInBackstack(fragmentManager,"about_fragment")){
+                if(isFragmentInBackstack(fragmentManager,ABOUT_FRAGMENT_TAG)){
                     return true;
                 }
-                if(isFragmentInBackstack(fragmentManager,"progress_fragment")){
-                    fragmentManager.popBackStack ("progress_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                if(isFragmentInBackstack(fragmentManager,PROGRESS_FRAGMENT_TAG)){
+                    fragmentManager.popBackStack (PROGRESS_FRAGMENT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
                 Fragment aboutFragment = new AboutFragment();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.fragmentContainer,aboutFragment).addToBackStack("about_fragment").commit();
+                transaction.replace(R.id.fragmentContainer,aboutFragment).addToBackStack(ABOUT_FRAGMENT_TAG).commit();
                 return true;
             }
             default:
@@ -235,12 +238,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(nightmode){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            editor = sharedPreferences.edit();
-            editor.putBoolean("night",false);
+            editor.putBoolean(NIGHTMODE_KEY,false);
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            editor = sharedPreferences.edit();
-            editor.putBoolean("night",true);
+            editor.putBoolean(NIGHTMODE_KEY,true);
         }
         editor.apply();
     }
