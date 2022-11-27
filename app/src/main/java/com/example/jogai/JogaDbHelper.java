@@ -221,8 +221,6 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     }
 
-    //To store a image in to db
-
     public void insertAsana(AsanaModel asana) throws SQLiteException{
         ContentValues cv = new  ContentValues();
         cv.put(Asanas.COLUMN_SANSKRIT_NAME,asana.getSanskritName());

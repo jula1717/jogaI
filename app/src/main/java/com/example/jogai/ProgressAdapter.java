@@ -73,6 +73,10 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         holder.pbAsanaType.setProgress(doneQuantity*1000);
         holder.txtDone.setText(String.valueOf(doneQuantity));
         holder.txtAll.setText(String.valueOf(allQuantity));
+        checkDoneAmount();
+    }
+
+    private void checkDoneAmount() {
         if(allRegardlessOfType == doneRegardlessOfType){
             StyleableToast.makeText(context, context.getString(R.string.congrats),Toast.LENGTH_SHORT,R.style.congratsToast).show();
         }

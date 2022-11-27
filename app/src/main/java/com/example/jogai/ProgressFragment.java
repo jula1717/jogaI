@@ -36,6 +36,12 @@ public class ProgressFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.progress,container,false);
+        initializeRecyclerView(view);
+
+        return view;
+    }
+
+    private void initializeRecyclerView(View view) {
         dbHelper = JogaDbHelper.getInstance(context);
         types = dbHelper.getTypes();
         recyclerView = view.findViewById(R.id.progressRecyclerView);
@@ -44,7 +50,5 @@ public class ProgressFragment extends Fragment {
         layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
-
-        return view;
     }
 }

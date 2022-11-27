@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,21 +39,21 @@ public class MainActivity extends AppCompatActivity {
     AsanasAdapter adapter;
     JogaDbHelper dbHelper;
     ArrayList<AsanaModel> asanas;
-
-    //sort type
     int comparatorNumber=2;
-    public static final String KEY_COMPARATOR = "com.example.jogai.MainActivity.KEY_COMPARATOR";
-
-    //dark mode
     boolean nightmode;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    FragmentManager fragmentManager;
+
+    //KEYS AND TAGS
     public static final String KEY_ASANAS_LIST = "com.example.jogai.MainActivity.KEY_ASANAS_LIST";
+    public static final String SHARED_PREFERENCES_KEY = "com.example.jogai.MainActivity.SHARED_PREFERENCES_KEY";
+    public static final String NIGHTMODE_KEY = "com.example.jogai.MainActivity.NIGHTMODE_KEY";
+    public static final String KEY_COMPARATOR = "com.example.jogai.MainActivity.KEY_COMPARATOR";
     public static final String ABOUT_FRAGMENT_TAG = "com.example.jogai.MainActivity.ABOUT_FRAGMENT_TAG";
     public static final String PROGRESS_FRAGMENT_TAG = "com.example.jogai.MainActivity.PROGRESS_FRAGMENT_TAG";
     public static final String ASANA_FRAGMENT_TAG = "com.example.jogai.MainActivity.ASANA_FRAGMENT_TAG";
-    public static final String SHARED_PREFERENCES_KEY = "com.example.jogai.MainActivity.SHARED_PREFERENCES_KEY";
-    public static final String NIGHTMODE_KEY = "com.example.jogai.MainActivity.NIGHTMODE_KEY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,39 +65,39 @@ public class MainActivity extends AppCompatActivity {
         if(asanas==null) {
             asanas = dbHelper.getAsanas();
         }
+        initializeAsanasRecyclerView(savedInstanceState);
+        fragmentManager= getSupportFragmentManager();
+        nightmode = sharedPreferences.getBoolean(NIGHTMODE_KEY,false);
+        changeModeFirstTime();
+    }
+
+    AsanasAdapter.OnItemClickListener onItemClickListener = new AsanasAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClicked(int position) {
+            AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position),getApplicationContext());
+            replaceFragment(fragmentManager, fragment, ASANA_FRAGMENT_TAG);
+        }
+
+        @Override
+        public void onDoneClicked(int position, ImageView imgIconDone, ImageView imgAsana) {
+            changeState(position, imgIconDone,imgAsana);
+        }
+    };
+
+    private void initializeAsanasRecyclerView(Bundle savedInstanceState) {
         recyclerView = findViewById(R.id.asanasRecyclerView);
         recyclerView.setHasFixedSize(true);
-        Comparator comparator = new DoneComparator();
+        Comparator comparator = new DoneComparator();   // default comparator
         Collections.sort(asanas, comparator);
         adapter= new AsanasAdapter(getApplicationContext(),asanas);
-        if(savedInstanceState!=null){
+        if(savedInstanceState !=null){
             comparatorNumber = savedInstanceState.getInt(KEY_COMPARATOR,2);
         }
         mySort(comparatorNumber);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
-
-        //dark mode
-
-        nightmode = sharedPreferences.getBoolean(NIGHTMODE_KEY,false);
-        changeMode2();
-
-        adapter.setListener(new AsanasAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int position) {
-                AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position),getApplicationContext());
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.fragmentContainer,fragment).addToBackStack(ASANA_FRAGMENT_TAG).commit();
-            }
-
-            @Override
-            public void onDoneClicked(int position, ImageView imgIconDone, ImageView imgAsana) {
-                changeState(position, imgIconDone,imgAsana);
-            }
-        });
+        adapter.setListener(onItemClickListener);
     }
 
     public void changeState(int position, ImageView imgIconDone,ImageView imgAsana) {
@@ -163,72 +162,61 @@ public class MainActivity extends AppCompatActivity {
                 changeMode();
                 return true;
             case R.id.sort_difficulty: {
-                if(comparatorNumber==1) return true;
-                comparatorNumber = 1;
-                mySort(comparatorNumber);
-                return true;
+                return changeComparatorNumber(1);
             }
             case R.id.sort_done: {
-                if(comparatorNumber==2) return true;
-                comparatorNumber = 2;
-                mySort(comparatorNumber);
-                return true;
+                return changeComparatorNumber(2);
             }
             case R.id.sort_name: {
-                if(comparatorNumber==3) return true;
-                comparatorNumber = 3;
-                mySort(comparatorNumber);
-                return true;
+                return changeComparatorNumber(3);
             }
             case R.id.sort_sanskrit: {
-                if(comparatorNumber==4) return true;
-                comparatorNumber = 4;
-                mySort(comparatorNumber);
-                return true;
+                return changeComparatorNumber(4);
             }
             case R.id.sort_type: {
-                if(comparatorNumber==5) return true;
-                comparatorNumber = 5;
-                mySort(comparatorNumber);
-                return true;
+                return changeComparatorNumber(5);
             }
             case R.id.sort_undone: {
-                if(comparatorNumber==6) return true;
-                comparatorNumber = 6;
-                mySort(comparatorNumber);
-                return true;
+                return changeComparatorNumber(6);
             }
             case R.id.achievements:{
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                if(isFragmentInBackstack(fragmentManager,PROGRESS_FRAGMENT_TAG)){
-                    return true;
-                }
-                if(isFragmentInBackstack(fragmentManager,ABOUT_FRAGMENT_TAG)){
-                    fragmentManager.popBackStack (ABOUT_FRAGMENT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                }
+                if (chceckBackstack(PROGRESS_FRAGMENT_TAG, ABOUT_FRAGMENT_TAG)) return true;
                 Fragment progressFragment = ProgressFragment.newInstance(getApplicationContext());
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.fragmentContainer,progressFragment).addToBackStack(PROGRESS_FRAGMENT_TAG).commit();
+                replaceFragment(fragmentManager, progressFragment, PROGRESS_FRAGMENT_TAG);
                 return true;
             }
             case R.id.about:{
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                if(isFragmentInBackstack(fragmentManager,ABOUT_FRAGMENT_TAG)){
-                    return true;
-                }
-                if(isFragmentInBackstack(fragmentManager,PROGRESS_FRAGMENT_TAG)){
-                    fragmentManager.popBackStack (PROGRESS_FRAGMENT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                }
+                if (chceckBackstack(ABOUT_FRAGMENT_TAG, PROGRESS_FRAGMENT_TAG)) return true;
                 Fragment aboutFragment = new AboutFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.fragmentContainer,aboutFragment).addToBackStack(ABOUT_FRAGMENT_TAG).commit();
+                replaceFragment(fragmentManager, aboutFragment, ABOUT_FRAGMENT_TAG);
                 return true;
             }
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean chceckBackstack(String fragmentTagName, String fragmentToPopTagName) {
+        if (isFragmentInBackstack(fragmentManager, fragmentTagName)) {
+            return true;
+        }
+        if (isFragmentInBackstack(fragmentManager, fragmentToPopTagName)) {
+            fragmentManager.popBackStack(fragmentToPopTagName, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        return false;
+    }
+
+    private void replaceFragment(FragmentManager fragmentManager, Fragment fragment, String fragmentTag) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
+        transaction.replace(R.id.fragmentContainer, fragment).addToBackStack(fragmentTag).commit();
+    }
+
+    private boolean changeComparatorNumber(int i) {
+        if (comparatorNumber == i) return true;
+        comparatorNumber = i;
+        mySort(comparatorNumber);
+        return true;
     }
 
     private void changeMode() {
@@ -243,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void changeMode2() {
+    private void changeModeFirstTime() {
 
         if(nightmode){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
