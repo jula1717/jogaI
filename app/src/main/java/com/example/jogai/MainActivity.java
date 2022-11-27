@@ -11,20 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.ColorFilter;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TimingLogger;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import com.example.jogai.comparators.DifficultyComparator;
 import com.example.jogai.comparators.DoneComparator;
@@ -47,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     AsanasAdapter adapter;
     JogaDbHelper dbHelper;
-    ArrayList<Asana> asanas;
+    ArrayList<AsanaModel> asanas;
 
     //sort type
     int comparatorNumber=2;
@@ -68,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         if(asanas==null) {
             asanas = dbHelper.getAsanas();
         }
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.asanasRecyclerView);
         recyclerView.setHasFixedSize(true);
         Comparator comparator = new DoneComparator();
         Collections.sort(asanas, comparator);
@@ -93,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.frameLayout,fragment).addToBackStack("asana_fragment").commit();
+                transaction.replace(R.id.fragmentContainer,fragment).addToBackStack("asana_fragment").commit();
             }
 
             @Override
@@ -137,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("ASANAS",MODE_PRIVATE);
         String json = sharedPreferences.getString(KEY_ASANAS_LIST,null);
         comparatorNumber = sharedPreferences.getInt(KEY_COMPARATOR,2);
-        Type type = new TypeToken<ArrayList<Asana>>(){}.getType();
+        Type type = new TypeToken<ArrayList<AsanaModel>>(){}.getType();
         asanas = gson.fromJson(json,type);
     }
 
@@ -213,10 +206,10 @@ public class MainActivity extends AppCompatActivity {
                 if(isFragmentInBackstack(fragmentManager,"about_fragment")){
                     fragmentManager.popBackStack ("about_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
-                Fragment progressFragment = ProgressFragment.newInstance(asanas,getApplicationContext());
+                Fragment progressFragment = ProgressFragment.newInstance(getApplicationContext());
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.frameLayout,progressFragment).addToBackStack("progress_fragment").commit();
+                transaction.replace(R.id.fragmentContainer,progressFragment).addToBackStack("progress_fragment").commit();
                 return true;
             }
             case R.id.about:{
@@ -230,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment aboutFragment = new AboutFragment();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-                transaction.replace(R.id.frameLayout,aboutFragment).addToBackStack("about_fragment").commit();
+                transaction.replace(R.id.fragmentContainer,aboutFragment).addToBackStack("about_fragment").commit();
                 return true;
             }
             default:

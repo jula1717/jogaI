@@ -25,7 +25,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/asanaTypeTxt"
+                    android:id="@+id/txtAsanaType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -35,7 +35,7 @@
                     tools:textStyle="bold" />
 
                     <ImageView
-                        android:id="@+id/asanaTypeImg"
+                        android:id="@+id/imgAsanaType"
                         android:layout_weight="1"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
@@ -51,7 +51,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:id="@+id/doneTxt"
+                            android:id="@+id/txtDone"
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
                             android:text="0"/>
@@ -61,7 +61,7 @@
                             android:textSize="20sp"
                             android:text="/"/>
                         <TextView
-                            android:id="@+id/allTxt"
+                            android:id="@+id/txtAll"
                             android:layout_width="wrap_content"
                             android:textSize="20sp"
                             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                     android:layout_marginBottom="10dp"
                     android:scaleY="2"
                     android:layout_marginHorizontal="20dp"
-                    android:id="@+id/asanaTypeProgressBar"
+                    android:id="@+id/pbAsanaType"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

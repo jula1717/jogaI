@@ -1,7 +1,6 @@
 package com.example.jogai;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,21 +13,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
 public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressViewHolder>{
 
-   List<AsanaType> types;
+   List<TypeModel> types;
    Context context;
-   List<Point> progress;
-   List<Point> quantity;
+   List<Point> doneQuantity;
+   List<Point> allQuantity;
    JogaDbHelper dbHelper;
-   int ALL=0,DONE=0;
+   int allRegardlessOfType =0, doneRegardlessOfType =0;
 
-    public ProgressAdapter(List<AsanaType> types, Context context) {
+    public ProgressAdapter(List<TypeModel> types, Context context) {
         this.types = types;
         this.context = context;
         dbHelper = JogaDbHelper.getInstance(context);
@@ -44,25 +42,25 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
 
     @Override
     public void onBindViewHolder(@NonNull ProgressViewHolder holder, int position) {
-        AsanaType type = types.get(position);
+        TypeModel type = types.get(position);
         String typeName = type.getType();
         holder.txtAsanaType.setText(typeName);
         int imgRes = type.getImgRes();
-        holder.imgAsanaTypeImage.setImageResource(imgRes);
-        quantity = dbHelper.countAllAmountSpecificType();
+        holder.imgAsanaType.setImageResource(imgRes);
+        allQuantity = dbHelper.countNumberOfAllAsanasSpecificType();
         int allQuantity = 0;
-        for (Point single:quantity) {
-            if (single.x==type.getId()){
-                allQuantity = single.y;
-                ALL+=allQuantity;
+        for (Point singleType: this.allQuantity) {
+            if (singleType.x==type.getId()){
+                allQuantity = singleType.y;
+                allRegardlessOfType +=allQuantity;
             }
         }
-        progress = dbHelper.countDoneAmountSpecificType();
+        doneQuantity = dbHelper.countNumberOfDoneAsanasSpecificType();
         int doneQuantity = 0;
-        for (Point single:progress) {
-            if (single.x==type.getId()){
-                doneQuantity = single.y;
-                DONE+=doneQuantity;
+        for (Point singleType: this.doneQuantity) {
+            if (singleType.x==type.getId()){
+                doneQuantity = singleType.y;
+                doneRegardlessOfType +=doneQuantity;
             }
         }
         ProgressBarAnimation anim = new ProgressBarAnimation(holder.pbAsanaType, 0, doneQuantity*1000);
@@ -71,7 +69,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         holder.pbAsanaType.startAnimation(anim);
         holder.txtDone.setText(String.valueOf(doneQuantity));
         holder.txtAll.setText(String.valueOf(allQuantity));
-        if(ALL==DONE){
+        if(allRegardlessOfType == doneRegardlessOfType){
             StyleableToast.makeText(context,"Gratulacje! Znasz już wszystkie asany",Toast.LENGTH_SHORT,R.style.congratsToast).show();
         }
     }
@@ -83,17 +81,17 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
 
     public static class ProgressViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView imgAsanaTypeImage;
+        ImageView imgAsanaType;
         TextView txtAsanaType,txtDone,txtAll;
         ProgressBar pbAsanaType;
 
         public ProgressViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgAsanaTypeImage = itemView.findViewById(R.id.asanaTypeImg);
-            txtAsanaType = itemView.findViewById(R.id.asanaTypeTxt);
-            pbAsanaType = itemView.findViewById(R.id.asanaTypeProgressBar);
-            txtDone = itemView.findViewById(R.id.doneTxt);
-            txtAll = itemView.findViewById(R.id.allTxt);
+            imgAsanaType = itemView.findViewById(R.id.imgAsanaType);
+            txtAsanaType = itemView.findViewById(R.id.txtAsanaType);
+            pbAsanaType = itemView.findViewById(R.id.pbAsanaType);
+            txtDone = itemView.findViewById(R.id.txtDone);
+            txtAll = itemView.findViewById(R.id.txtAll);
         }
     }
 }

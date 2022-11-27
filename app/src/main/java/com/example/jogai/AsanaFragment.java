@@ -1,15 +1,11 @@
 package com.example.jogai;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,15 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.io.ByteArrayOutputStream;
-
 public class AsanaFragment extends Fragment {
     public static final String ARG_ASANA="asana";
-    private Asana asana;
+    private AsanaModel asana;
     Context context;
     JogaDbHelper dbHelper;
 
-    public static AsanaFragment newInstance(Asana asana, Context context){
+    public static AsanaFragment newInstance(AsanaModel asana, Context context){
         AsanaFragment fragment = new AsanaFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_ASANA,asana);
@@ -48,14 +42,14 @@ public class AsanaFragment extends Fragment {
         ImageView iconDone,image;
         LinearLayout details;
         details = view.findViewById(R.id.detailsLayout);
-        sankritName = view.findViewById(R.id.sanskritNameTxt);
-        name = view.findViewById(R.id.sanskritNameTxt);
-        difficulty = view.findViewById(R.id.difficultyLevelTxt);
-        type = view.findViewById(R.id.asanaTypeTxt);
-        description = view.findViewById(R.id.descriptionTxt);
+        sankritName = view.findViewById(R.id.txtSanskritName);
+        name = view.findViewById(R.id.txtSanskritName);
+        difficulty = view.findViewById(R.id.txtDifficultyLevel);
+        type = view.findViewById(R.id.txtAsanaType);
+        description = view.findViewById(R.id.txtDescription);
         description.setMovementMethod(new ScrollingMovementMethod());
-        iconDone = view.findViewById(R.id.iconDone);
-        image = view.findViewById(R.id.asanaImg);
+        iconDone = view.findViewById(R.id.imgDone);
+        image = view.findViewById(R.id.imgAsana);
         image.setColorFilter(getResources().getColor(R.color.dark_gray));
         if(getArguments()!=null){
             asana = getArguments().getParcelable(ARG_ASANA);
@@ -64,7 +58,7 @@ public class AsanaFragment extends Fragment {
         name.setText(asana.getName());
         description.setText(asana.getDescription());
         dbHelper = JogaDbHelper.getInstance(context);
-        String category = dbHelper.getCategoryNameById(asana.getColumnTypeId());
+        String category = dbHelper.getTypeNameById(asana.getColumnTypeId());
         type.setText(category.toString());
         difficulty.setText(""+asana.getDifficulty());
         if(asana.isDone()) {

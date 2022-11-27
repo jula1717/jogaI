@@ -15,32 +15,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasViewHolder>{
-    List<Asana> asanas;
+    List<AsanaModel> asanas;
     Context context;
 
-    public AsanasAdapter(Context context, List <Asana> asanas) {
+    public AsanasAdapter(Context context, List <AsanaModel> asanas) {
         this.context = context;
         this.asanas = asanas;
     }
 
     @Override
     public void onBindViewHolder(@NonNull AsanasViewHolder holder, int position) {
-        Asana asana = asanas.get(position);
+        AsanaModel asana = asanas.get(position);
             String sanskritName = asana.getSanskritName();
             String name = asana.getName();
             int imageRes = asana.getImgRes();
             holder.txtName.setText(name);
             holder.txtSanskritName.setText(sanskritName);
             int drawableResourceId = context.getResources().getIdentifier("ic_done", "drawable", context.getPackageName());
-            holder.imgIconDone.setImageResource(drawableResourceId);
-            holder.imgAsanaImage.setImageResource(imageRes);
+            holder.imgDone.setImageResource(drawableResourceId);
+            holder.imgAsana.setImageResource(imageRes);
 
         if(asana.isDone()){
-            holder.imgIconDone.setColorFilter(context.getResources().getColor(R.color.teal_200));
-            holder.imgAsanaImage.setColorFilter(context.getResources().getColor(R.color.teal_200));
+            holder.imgDone.setColorFilter(context.getResources().getColor(R.color.teal_200));
+            holder.imgAsana.setColorFilter(context.getResources().getColor(R.color.teal_200));
         }else{
-            holder.imgIconDone.setColorFilter(context.getResources().getColor(R.color.dark_gray));
-            holder.imgAsanaImage.setColorFilter(context.getResources().getColor(R.color.dark_gray));
+            holder.imgDone.setColorFilter(context.getResources().getColor(R.color.dark_gray));
+            holder.imgAsana.setColorFilter(context.getResources().getColor(R.color.dark_gray));
         }
     }
 
@@ -70,24 +70,24 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
 
 
     public static class AsanasViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgAsanaImage;
-        ImageView imgIconDone;
+        ImageView imgAsana;
+        ImageView imgDone;
         TextView txtSanskritName;
         TextView txtName;
         public AsanasViewHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
-            imgAsanaImage = itemView.findViewById(R.id.asanaImg);
-            txtSanskritName = itemView.findViewById(R.id.asanaSanskritNameTxt);
-            txtName = itemView.findViewById(R.id.asanaNameTxt);
-            imgIconDone = itemView.findViewById(R.id.doneIcon);
-            imgIconDone.setOnLongClickListener(new View.OnLongClickListener() {
+            imgAsana = itemView.findViewById(R.id.imgAsana);
+            txtSanskritName = itemView.findViewById(R.id.txtAsanaSanskritName);
+            txtName = itemView.findViewById(R.id.txtxAsanaName);
+            imgDone = itemView.findViewById(R.id.doneIcon);
+            imgDone.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     if(listener!=null)
                     {
                         int position = getAbsoluteAdapterPosition();
                         if(position!=RecyclerView.NO_POSITION){
-                            listener.onDoneClicked(position,imgIconDone,imgAsanaImage);
+                            listener.onDoneClicked(position, imgDone, imgAsana);
                         }
                     }
                     return true;

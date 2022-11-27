@@ -12,7 +12,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:gravity="center"
-       android:id="@+id/sanskritNameTxt"
+       android:id="@+id/txtSanskritName"
        android:textSize="30sp"
        tools:text="Malasana"/>
 
@@ -22,7 +22,7 @@
         android:layout_weight="1">
 
     <ImageView
-        android:id="@+id/asanaImg"
+        android:id="@+id/imgAsana"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@color/gray"/>
@@ -45,7 +45,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/asanaTypeTxt"
+                    android:id="@+id/txtAsanaType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
@@ -56,14 +56,14 @@
                     android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/difficultyTxt"
+                    android:id="@+id/txtDfficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
                     android:text="poziom trudności:" />
 
                 <TextView
-                    android:id="@+id/difficultyLevelTxt"
+                    android:id="@+id/txtDifficultyLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
@@ -74,7 +74,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/iconDone"
+                android:id="@+id/imgDone"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -85,7 +85,7 @@
 
 
         <TextView
-            android:id="@+id/descriptionTxt"
+            android:id="@+id/txtDescription"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -101,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:id="@+id/nameTxt"
+        android:id="@+id/txtName"
         android:textSize="30sp"
         android:text="Malasana"
         android:paddingBottom="10dp"/>

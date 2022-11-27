@@ -6,7 +6,7 @@ public class JogaContract {
     private JogaContract(){
 
     }
-    public static final class Asana implements BaseColumns {
+    public static final class Asanas implements BaseColumns {
         public static final String TABLE_NAME="asanas";
         public static final String COLUMN_SANSKRIT_NAME="sanskrit_name";
         public static final String COLUMN_NAME="name";

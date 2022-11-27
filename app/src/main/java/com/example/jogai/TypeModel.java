@@ -1,6 +1,6 @@
 package com.example.jogai;
 
-public class AsanaType {
+public class TypeModel {
     String type;
     int imgRes;
     int id;
@@ -14,10 +14,10 @@ public class AsanaType {
     public static final int POZYCJA_RELAKSACYJNA=7;
 
 
-    public AsanaType() {
+    public TypeModel() {
     }
 
-    public AsanaType(String type, int imgRes) {
+    public TypeModel(String type, int imgRes) {
         this.type = type;
         this.imgRes = imgRes;
     }

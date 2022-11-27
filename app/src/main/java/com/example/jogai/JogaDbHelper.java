@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
 import com.example.jogai.JogaContract.*;
@@ -49,15 +48,15 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_TYPES_TABLE);
 
         final String SQL_CREATE_ASANAS_TABLE = "CREATE TABLE "
-                +JogaContract.Asana.TABLE_NAME + " ("
-                +JogaContract.Asana._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +JogaContract.Asana.COLUMN_SANSKRIT_NAME+" TEXT,"
-                +JogaContract.Asana.COLUMN_NAME+" TEXT,"
-                +JogaContract.Asana.COLUMN_IMAGE +" BLOB,"
-                +JogaContract.Asana.COLUMN_DESCRIPTION+" TEXT,"
-                +JogaContract.Asana.COLUMN_TYPE_ID+" INTEGER,"
-                +JogaContract.Asana.COLUMN_DIFFICULTY+" TINYINT,"
-                +JogaContract.Asana.COLUMN_DONE+" BOOLEAN);";
+                + Asanas.TABLE_NAME + " ("
+                + Asanas._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + Asanas.COLUMN_SANSKRIT_NAME+" TEXT,"
+                + Asanas.COLUMN_NAME+" TEXT,"
+                + Asanas.COLUMN_IMAGE +" BLOB,"
+                + Asanas.COLUMN_DESCRIPTION+" TEXT,"
+                + Asanas.COLUMN_TYPE_ID+" INTEGER,"
+                + Asanas.COLUMN_DIFFICULTY+" TINYINT,"
+                + Asanas.COLUMN_DONE+" BOOLEAN);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_ASANAS_TABLE);
 
@@ -68,75 +67,74 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ JogaContract.Asana.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ Asanas.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+ JogaContract.Types.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 
-    public String getCategoryNameById(int categoryId) {
-        String categoryName="";
+    public String getTypeNameById(int categoryId) {
+        String typeName="";
         db = getReadableDatabase();
 
         String[] selectionArgs = {String.valueOf(categoryId)};
         Cursor c = db.rawQuery("SELECT " + Types.COLUMN_TYPE + " FROM " + JogaContract.Types.TABLE_NAME + " WHERE " + Types._ID + "=?", selectionArgs);
 
         if (c.moveToFirst()) {
-            categoryName = c.getString(c.getColumnIndexOrThrow(Types.COLUMN_TYPE));
+            typeName = c.getString(c.getColumnIndexOrThrow(Types.COLUMN_TYPE));
         }
         c.close();
-        return categoryName;
+        return typeName;
     }
 
 
-    public ArrayList<Point> countAllAmountSpecificType(){
+    public ArrayList<Point> countNumberOfAllAsanasSpecificType(){
         db = getReadableDatabase();
         final String COLUMN_QUANTITY = "quantity";
-        Cursor c = db.rawQuery("SELECT COUNT("+ JogaContract.Asana._ID+") AS "+COLUMN_QUANTITY+", "+
-                        JogaContract.Asana.COLUMN_TYPE_ID+" FROM "+JogaContract.Asana.TABLE_NAME+
-                " GROUP BY "+JogaContract.Asana.COLUMN_TYPE_ID,null);
+        Cursor c = db.rawQuery("SELECT "+ Asanas.COLUMN_TYPE_ID +", COUNT("+ Asanas._ID+") AS "+COLUMN_QUANTITY+" FROM "+ Asanas.TABLE_NAME+
+                " GROUP BY "+ Asanas.COLUMN_TYPE_ID,null);
                 //SELECT count(_id) AS ilosc, type FROM asanas GROUP BY type;
-        ArrayList<Point> progress = new ArrayList<>();
+        ArrayList<Point> specificAsanas = new ArrayList<>();
         if(c.moveToFirst()){
             do{
                 Point point = new Point();
-                int typeId = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID));
+                int typeId = c.getInt(c.getColumnIndexOrThrow(Asanas.COLUMN_TYPE_ID));
                 int quantity = c.getInt(c.getColumnIndexOrThrow(COLUMN_QUANTITY));
                 point.set(typeId,quantity);
-                progress.add(point);
+                specificAsanas.add(point);
             }while(c.moveToNext());
         }
         c.close();
-        return progress;
+        return specificAsanas;
     }
 
-    public ArrayList<Point> countDoneAmountSpecificType(){
+    public ArrayList<Point> countNumberOfDoneAsanasSpecificType(){
         db = getReadableDatabase();
         final String COLUMN_QUANTITY = "quantity";
         String[] selectionArgs = {String.valueOf(1)};
-        Cursor c = db.rawQuery("SELECT "+ JogaContract.Asana.COLUMN_TYPE_ID +", COUNT("+ JogaContract.Asana._ID+") AS "+COLUMN_QUANTITY+" FROM "+JogaContract.Asana.TABLE_NAME+
-                " WHERE "+ JogaContract.Asana.COLUMN_DONE +"=? GROUP BY "+JogaContract.Asana.COLUMN_TYPE_ID,selectionArgs);
+        Cursor c = db.rawQuery("SELECT "+ Asanas.COLUMN_TYPE_ID +", COUNT("+ Asanas._ID+") AS "+COLUMN_QUANTITY+" FROM "+ Asanas.TABLE_NAME+
+                " WHERE "+ Asanas.COLUMN_DONE +"=? GROUP BY "+ Asanas.COLUMN_TYPE_ID,selectionArgs);
         //SELECT type, count(_id) AS ilosc FROM asanas WHERE done=1 GROUP BY type;
-        ArrayList<Point> progress = new ArrayList<>();
+        ArrayList<Point> specificDoneAsanas = new ArrayList<>();
         if(c.moveToFirst()){
             do{
                 Point point = new Point();
-                int typeId = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID));
+                int typeId = c.getInt(c.getColumnIndexOrThrow(Asanas.COLUMN_TYPE_ID));
                 int quantity = c.getInt(c.getColumnIndexOrThrow(COLUMN_QUANTITY));
                 point.set(typeId,quantity);
-                progress.add(point);
+                specificDoneAsanas.add(point);
             }while(c.moveToNext());
         }
         c.close();
-        return progress;
+        return specificDoneAsanas;
     }
 
-    public ArrayList<AsanaType> getTypes() {
+    public ArrayList<TypeModel> getTypes() {
         db = getReadableDatabase();
         Cursor c = db.query(JogaContract.Types.TABLE_NAME,null,null,null,null,null,null);
-        ArrayList<AsanaType> types = new ArrayList<>();
+        ArrayList<TypeModel> types = new ArrayList<>();
         if (c.moveToFirst()) {
             do{
-                AsanaType type = new AsanaType();
+                TypeModel type = new TypeModel();
                 type.setImgRes(c.getInt(c.getColumnIndexOrThrow(Types.COLUMN_IMAGE_RESOURCE)));
                 type.setType(c.getString(c.getColumnIndexOrThrow(Types.COLUMN_TYPE)));
                 type.setId(c.getInt(c.getColumnIndexOrThrow(Types._ID)));
@@ -147,21 +145,21 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         return types;
     }
 
-    public ArrayList<Asana> getAsanas() {
+    public ArrayList<AsanaModel> getAsanas() {
         db = getReadableDatabase();
-        Cursor c = db.query(JogaContract.Asana.TABLE_NAME,null,null,null,null,null,null);
-        ArrayList<Asana> asanas = new ArrayList<>();
+        Cursor c = db.query(Asanas.TABLE_NAME,null,null,null,null,null,null);
+        ArrayList<AsanaModel> asanas = new ArrayList<>();
         if(c.moveToFirst()) {
             do {
-                Asana asana = new Asana();
-                asana.setName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_NAME)));
-                asana.setSanskritName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_SANSKRIT_NAME)));
-                asana.setDescription(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DESCRIPTION)));
-                asana.setDifficulty((byte) c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DIFFICULTY)));
-                asana.setImgRes(c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE)));
-                boolean value = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DONE)) > 0;
+                AsanaModel asana = new AsanaModel();
+                asana.setName(c.getString(c.getColumnIndexOrThrow(Asanas.COLUMN_NAME)));
+                asana.setSanskritName(c.getString(c.getColumnIndexOrThrow(Asanas.COLUMN_SANSKRIT_NAME)));
+                asana.setDescription(c.getString(c.getColumnIndexOrThrow(Asanas.COLUMN_DESCRIPTION)));
+                asana.setDifficulty((byte) c.getInt(c.getColumnIndexOrThrow(Asanas.COLUMN_DIFFICULTY)));
+                asana.setImgRes(c.getInt(c.getColumnIndexOrThrow(Asanas.COLUMN_IMAGE)));
+                boolean value = c.getInt(c.getColumnIndexOrThrow(Asanas.COLUMN_DONE)) > 0;
                 asana.setDone(value);
-                asana.setColumnTypeId(c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID)));
+                asana.setColumnTypeId(c.getInt(c.getColumnIndexOrThrow(Asanas.COLUMN_TYPE_ID)));
                 asanas.add(asana);
             } while (c.moveToNext());
         }
@@ -175,10 +173,10 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {String.valueOf(position+1)};
         Cursor c;
         if(newState){
-            c = db.rawQuery("UPDATE " + JogaContract.Asana.TABLE_NAME + " SET " + JogaContract.Asana.COLUMN_DONE + "=1" + " WHERE " + JogaContract.Asana._ID + "=?", selectionArgs);
+            c = db.rawQuery("UPDATE " + Asanas.TABLE_NAME + " SET " + Asanas.COLUMN_DONE + "=1" + " WHERE " + Asanas._ID + "=?", selectionArgs);
         }
         else{
-            c = db.rawQuery("UPDATE " + JogaContract.Asana.TABLE_NAME + " SET " + JogaContract.Asana.COLUMN_DONE + "=0" + " WHERE " + JogaContract.Asana._ID + "=?", selectionArgs);
+            c = db.rawQuery("UPDATE " + Asanas.TABLE_NAME + " SET " + Asanas.COLUMN_DONE + "=0" + " WHERE " + Asanas._ID + "=?", selectionArgs);
         }
         c.moveToFirst();
         c.close();
@@ -187,17 +185,17 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     //fill tables, could comment later
 
     public void fillTypesTable(){
-        AsanaType t1 = new AsanaType("pozycja stojąca",R.drawable.s1);
+        TypeModel t1 = new TypeModel("pozycja stojąca",R.drawable.s1);
         insertType(t1);
-        AsanaType t2 = new AsanaType("pozycja siedząca",R.drawable.s2);
+        TypeModel t2 = new TypeModel("pozycja siedząca",R.drawable.s2);
         insertType(t2);
-        AsanaType t3 = new AsanaType("skłon do przodu",R.drawable.s3);
+        TypeModel t3 = new TypeModel("skłon do przodu",R.drawable.s3);
         insertType(t3);
-        AsanaType t4 = new AsanaType("wygięcie do tyłu",R.drawable.s4);
+        TypeModel t4 = new TypeModel("wygięcie do tyłu",R.drawable.s4);
         insertType(t4);
     }
 
-    private void insertType(AsanaType type) {
+    private void insertType(TypeModel type) {
         ContentValues cv = new ContentValues();
         cv.put(Types.COLUMN_TYPE,type.getType());
         cv.put(Types.COLUMN_IMAGE_RESOURCE,type.getImgRes());
@@ -207,7 +205,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     public void fillAsanasTable() {
         for(int i = 0 ; i<5;i++) {
             String descriptionChair = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-            Asana a1 = new Asana("Utkatasana", "Krzesło", descriptionChair, AsanaType.POZYCJA_STOJACA, (byte) 1, false, R.drawable.camel);
+            AsanaModel a1 = new AsanaModel("Utkatasana", "Krzesło", descriptionChair, TypeModel.POZYCJA_STOJACA, (byte) 1, false, R.drawable.camel);
             insertAsana(a1);
         }
 
@@ -233,16 +231,16 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     //To store a image in to db
 
-    public void insertAsana(Asana asana) throws SQLiteException{
+    public void insertAsana(AsanaModel asana) throws SQLiteException{
         ContentValues cv = new  ContentValues();
-        cv.put(JogaContract.Asana.COLUMN_SANSKRIT_NAME,asana.getSanskritName());
-        cv.put(JogaContract.Asana.COLUMN_NAME,asana.getName());
-        cv.put(JogaContract.Asana.COLUMN_IMAGE,asana.getImgRes());
-        cv.put(JogaContract.Asana.COLUMN_DESCRIPTION,asana.getDescription());
-        cv.put(JogaContract.Asana.COLUMN_TYPE_ID,asana.getColumnTypeId());
-        cv.put(JogaContract.Asana.COLUMN_DIFFICULTY,asana.getDifficulty());
-        cv.put(JogaContract.Asana.COLUMN_DONE,asana.isDone());
-        db.insert( JogaContract.Asana.TABLE_NAME, null, cv );
+        cv.put(Asanas.COLUMN_SANSKRIT_NAME,asana.getSanskritName());
+        cv.put(Asanas.COLUMN_NAME,asana.getName());
+        cv.put(Asanas.COLUMN_IMAGE,asana.getImgRes());
+        cv.put(Asanas.COLUMN_DESCRIPTION,asana.getDescription());
+        cv.put(Asanas.COLUMN_TYPE_ID,asana.getColumnTypeId());
+        cv.put(Asanas.COLUMN_DIFFICULTY,asana.getDifficulty());
+        cv.put(Asanas.COLUMN_DONE,asana.isDone());
+        db.insert( Asanas.TABLE_NAME, null, cv );
     }
 
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {

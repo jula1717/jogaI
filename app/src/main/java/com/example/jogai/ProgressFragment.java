@@ -15,20 +15,15 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import java.util.ArrayList;
 
 public class ProgressFragment extends Fragment {
-    public static final String ARG_ASANAS="asanas";
-    private ArrayList<Asana> asanas;
-    private ArrayList<AsanaType> types;
+    private ArrayList<TypeModel> types;
     Context context;
     JogaDbHelper dbHelper;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     ProgressAdapter adapter;
 
-    public static ProgressFragment newInstance(ArrayList<Asana> asanas, Context context){
+    public static ProgressFragment newInstance(Context context){
         ProgressFragment fragment = new ProgressFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_ASANAS,asanas);
-        fragment.setArguments(args);
         fragment.setContext(context);
         return fragment;
     }
@@ -41,9 +36,6 @@ public class ProgressFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.progress,container,false);
-        if(getArguments()!=null){
-            asanas = getArguments().getParcelableArrayList(ARG_ASANAS);
-        }
         dbHelper = JogaDbHelper.getInstance(context);
         types = dbHelper.getTypes();
         recyclerView = view.findViewById(R.id.progressRecyclerView);

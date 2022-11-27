@@ -1,12 +1,12 @@
 package com.example.jogai.comparators;
 
-import com.example.jogai.Asana;
+import com.example.jogai.AsanaModel;
 
 import java.util.Comparator;
 
-public class DoneComparator implements Comparator<Asana> {
+public class DoneComparator implements Comparator<AsanaModel> {
     @Override
-    public int compare(Asana a1, Asana a2) {
+    public int compare(AsanaModel a1, AsanaModel a2) {
         return Boolean.compare(!a1.isDone(), !a2.isDone());
     }
 }

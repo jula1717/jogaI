@@ -1,13 +1,12 @@
 package com.example.jogai.comparators;
 
-import com.example.jogai.Asana;
-import com.example.jogai.JogaContract;
+import com.example.jogai.AsanaModel;
 
 import java.util.Comparator;
 
-public class SanskritComparator implements Comparator<Asana> {
+public class SanskritComparator implements Comparator<AsanaModel> {
     @Override
-    public int compare(Asana a1, Asana a2) {
+    public int compare(AsanaModel a1, AsanaModel a2) {
         return a1.getSanskritName().compareTo(a2.getSanskritName());
     }
 }

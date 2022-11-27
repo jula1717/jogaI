@@ -3,7 +3,7 @@ package com.example.jogai;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Asana implements Parcelable {
+public class AsanaModel implements Parcelable {
     int id;
     String sanskritName;
     String name;
@@ -13,10 +13,10 @@ public class Asana implements Parcelable {
     boolean done;
     int imgRes;
 
-    public Asana() {
+    public AsanaModel() {
     }
 
-    public Asana(String sanskritName, String name, String description, int columnTypeId, byte difficulty, boolean done, int imgRes) {
+    public AsanaModel(String sanskritName, String name, String description, int columnTypeId, byte difficulty, boolean done, int imgRes) {
         this.sanskritName = sanskritName;
         this.name = name;
         this.description = description;
@@ -26,7 +26,7 @@ public class Asana implements Parcelable {
         this.imgRes = imgRes;
     }
 
-    protected Asana(Parcel in) {
+    protected AsanaModel(Parcel in) {
         id = in.readInt();
         sanskritName = in.readString();
         name = in.readString();
@@ -37,15 +37,15 @@ public class Asana implements Parcelable {
         imgRes = in.readInt();
     }
 
-    public static final Creator<Asana> CREATOR = new Creator<Asana>() {
+    public static final Creator<AsanaModel> CREATOR = new Creator<AsanaModel>() {
         @Override
-        public Asana createFromParcel(Parcel in) {
-            return new Asana(in);
+        public AsanaModel createFromParcel(Parcel in) {
+            return new AsanaModel(in);
         }
 
         @Override
-        public Asana[] newArray(int size) {
-            return new Asana[size];
+        public AsanaModel[] newArray(int size) {
+            return new AsanaModel[size];
         }
     };
 
