@@ -3,4 +3,8 @@
     <string name="congrats">Gratulacje! Znasz już wszystkie asany></string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent viverra tristique malesuada. Donec dapibus mauris lectus, eu vestibulum risus luctus eu. Cras pretium, arcu vel lacinia lacinia, ante nisl fermentum nunc, lacinia semper velit tortor vel dolor. Donec felis lorem, consectetur quis consequat at, mollis eget orci. Quisque a purus elementum, tincidunt purus at, vehicula mauris. Nullam quis auctor urna. Praesent vitae odio est.</string>
     <string name="about">Witaj w about!</string>
+    <string name="sample_type">pozycje stojące</string>
+    <string name="sample_name">dziecko</string>
+    <string name="sample_sanskrit">balasana</string>
+    <string name="difficulty_level">poziom trudności</string>
 </resources>

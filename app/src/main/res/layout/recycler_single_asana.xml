@@ -17,35 +17,50 @@
             android:id="@+id/imgAsana"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_margin="20dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginLeft="20dp"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="30dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_margin="10dp">
 
-            <TextView
-                android:id="@+id/txtAsanaSanskritName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="sanskrit asana name"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtxAsanaName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:text="normal asana name" />
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/txtAsanaSanskritName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="sanskrit asana name"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    tools:textStyle="bold" />
 
-        </LinearLayout>
+                <TextView
+                    android:textAlignment="center"
+                    android:id="@+id/txtAsanaName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    tools:text="normal asana name" />
+
+            </LinearLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
 
         <ImageView
             android:id="@+id/doneIcon"
