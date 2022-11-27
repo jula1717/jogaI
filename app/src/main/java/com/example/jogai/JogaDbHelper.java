@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=1;
+    public static final int DATABASE_VERSION=2;
     SQLiteDatabase db;
     Context context;
 
@@ -205,7 +205,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
     }
 
     public void fillAsanasTable() {
-        for(int i = 0 ; i<50;i++) {
+        for(int i = 0 ; i<5;i++) {
             String descriptionChair = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
             Asana a1 = new Asana("Utkatasana", "Krzesło", descriptionChair, AsanaType.POZYCJA_STOJACA, (byte) 1, false, R.drawable.camel);
             insertAsana(a1);

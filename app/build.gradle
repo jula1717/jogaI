@@ -44,4 +44,7 @@ dependencies {
 
     //gson
     implementation 'com.google.code.gson:gson:2.10'
+
+    //toast library
+    implementation 'io.github.muddz:styleabletoast:2.4.0'
 }

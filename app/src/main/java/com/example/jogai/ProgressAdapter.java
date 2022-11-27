@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressViewHolder>{
 
@@ -23,6 +26,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
    List<Point> progress;
    List<Point> quantity;
    JogaDbHelper dbHelper;
+   int ALL=0,DONE=0;
 
     public ProgressAdapter(List<AsanaType> types, Context context) {
         this.types = types;
@@ -50,6 +54,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         for (Point single:quantity) {
             if (single.x==type.getId()){
                 allQuantity = single.y;
+                ALL+=allQuantity;
             }
         }
         progress = dbHelper.countDoneAmountSpecificType();
@@ -57,6 +62,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         for (Point single:progress) {
             if (single.x==type.getId()){
                 doneQuantity = single.y;
+                DONE+=doneQuantity;
             }
         }
         ProgressBarAnimation anim = new ProgressBarAnimation(holder.pbAsanaType, 0, doneQuantity*1000);
@@ -65,6 +71,9 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         holder.pbAsanaType.startAnimation(anim);
         holder.txtDone.setText(String.valueOf(doneQuantity));
         holder.txtAll.setText(String.valueOf(allQuantity));
+        if(ALL==DONE){
+            StyleableToast.makeText(context,"Gratulacje! Znasz już wszystkie asany",Toast.LENGTH_SHORT,R.style.congratsToast).show();
+        }
     }
 
     @Override
