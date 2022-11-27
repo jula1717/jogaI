@@ -210,6 +210,9 @@ public class MainActivity extends AppCompatActivity {
                 if(isFragmentInBackstack(fragmentManager,"progress_fragment")){
                     return true;
                 }
+                if(isFragmentInBackstack(fragmentManager,"about_fragment")){
+                    fragmentManager.popBackStack ("about_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
                 Fragment progressFragment = ProgressFragment.newInstance(asanas,getApplicationContext());
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
@@ -220,6 +223,9 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 if(isFragmentInBackstack(fragmentManager,"about_fragment")){
                     return true;
+                }
+                if(isFragmentInBackstack(fragmentManager,"progress_fragment")){
+                    fragmentManager.popBackStack ("progress_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
                 Fragment aboutFragment = new AboutFragment();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
