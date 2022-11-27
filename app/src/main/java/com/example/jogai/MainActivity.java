@@ -15,6 +15,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.ColorFilter;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TimingLogger;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         loadData();
         dbHelper = JogaDbHelper.getInstance(this);
         if(asanas==null) {
-            getAllAsanas();
+            asanas = dbHelper.getAsanas();
         }
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -139,13 +141,6 @@ public class MainActivity extends AppCompatActivity {
         asanas = gson.fromJson(json,type);
     }
 
-    private void getAllAsanas(){
-        asanas = new ArrayList<>();
-        int number = dbHelper.countAsanas();
-        for(int i=1;i<=number;i++){
-            asanas.add(dbHelper.getAsana(i));
-        }
-    }
     @Override
     public void onBackPressed() {
 

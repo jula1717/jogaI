@@ -7,34 +7,34 @@ public class Asana implements Parcelable {
     int id;
     String sanskritName;
     String name;
-    byte[] image;
     String description;
     int columnTypeId;
     byte difficulty;
     boolean done;
+    int imgRes;
 
     public Asana() {
     }
 
-    public Asana(String sanskritName, String name, byte[] image, String description, int columnTypeId, byte difficulty, boolean done) {
+    public Asana(String sanskritName, String name, String description, int columnTypeId, byte difficulty, boolean done, int imgRes) {
         this.sanskritName = sanskritName;
         this.name = name;
-        this.image = image;
         this.description = description;
         this.columnTypeId = columnTypeId;
         this.difficulty = difficulty;
         this.done = done;
+        this.imgRes = imgRes;
     }
 
     protected Asana(Parcel in) {
         id = in.readInt();
         sanskritName = in.readString();
         name = in.readString();
-        image = in.createByteArray();
         description = in.readString();
         columnTypeId = in.readInt();
         difficulty = in.readByte();
         done = in.readByte() != 0;
+        imgRes = in.readInt();
     }
 
     public static final Creator<Asana> CREATOR = new Creator<Asana>() {
@@ -73,14 +73,6 @@ public class Asana implements Parcelable {
         this.name = name;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -113,6 +105,14 @@ public class Asana implements Parcelable {
         this.done = done;
     }
 
+    public int getImgRes() {
+        return imgRes;
+    }
+
+    public void setImgRes(int imgRes) {
+        this.imgRes = imgRes;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -123,10 +123,10 @@ public class Asana implements Parcelable {
         parcel.writeInt(id);
         parcel.writeString(sanskritName);
         parcel.writeString(name);
-        parcel.writeByteArray(image);
         parcel.writeString(description);
         parcel.writeInt(columnTypeId);
         parcel.writeByte(difficulty);
         parcel.writeByte((byte) (done ? 1 : 0));
+        parcel.writeInt(imgRes);
     }
 }

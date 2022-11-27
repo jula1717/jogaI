@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=7;
+    public static final int DATABASE_VERSION=2;
     SQLiteDatabase db;
     Context context;
 
@@ -147,41 +147,28 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         return types;
     }
 
-    public Asana getAsana(int id){
-        db = getWritableDatabase();
-        String[] selectionArgs = {String.valueOf(id)};
-        Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Asana.TABLE_NAME + " WHERE " + JogaContract.Asana._ID + "=?",selectionArgs);
-        Asana asana = new Asana();
-        if(c.moveToFirst()){
-            do{
+    public ArrayList<Asana> getAsanas() {
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Asana.TABLE_NAME,null);
+        ArrayList<Asana> asanas = new ArrayList<>();
+        if(c.moveToFirst()) {
+            do {
+                Asana asana = new Asana();
                 asana.setName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_NAME)));
                 asana.setSanskritName(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_SANSKRIT_NAME)));
                 asana.setDescription(c.getString(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DESCRIPTION)));
                 asana.setDifficulty((byte) c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DIFFICULTY)));
-                asana.setImage(c.getBlob(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE)));
+                asana.setImgRes(c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_IMAGE)));
                 boolean value = c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_DONE)) > 0;
                 asana.setDone(value);
                 asana.setColumnTypeId(c.getInt(c.getColumnIndexOrThrow(JogaContract.Asana.COLUMN_TYPE_ID)));
-            }while(c.moveToNext());
+                asanas.add(asana);
+            } while (c.moveToNext());
         }
         c.close();
-        return asana;
-
+        return asanas;
     }
 
-    public int countAsanas(){
-        db = getWritableDatabase();
-        final String COUNT_COLUMN = "count_column";
-        Cursor c = db.rawQuery("SELECT COUNT(*) AS "+COUNT_COLUMN+" FROM " + JogaContract.Asana.TABLE_NAME,null);
-        int number;
-        if (c.moveToFirst()) {
-            number = c.getInt(c.getColumnIndexOrThrow(COUNT_COLUMN));
-        }else {
-            number = 0;
-        }
-        c.close();
-        return number;
-    }
 
     public void changeAsanaState(int position, boolean newState) {
         db = getWritableDatabase();
@@ -217,31 +204,31 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         db.insert(Types.TABLE_NAME,null,cv);
     }
 
-    public void fillAsanasTable(){
-//        for(int i = 0 ; i<12;i++){
-            String descriptionChair="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-            Bitmap bitmapChair=BitmapFactory.decodeResource(context.getResources(),R.drawable.chair);
-            byte[] imageChair = getBitmapAsByteArray(bitmapChair); // this is a function
-            Asana a1= new Asana("Utkatasana","Krzesło",imageChair,descriptionChair,AsanaType.POZYCJA_STOJACA, (byte) 1,false);
+    public void fillAsanasTable() {
+        for(int i = 0 ; i<50;i++) {
+            String descriptionChair = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+            Asana a1 = new Asana("Utkatasana", "Krzesło", descriptionChair, AsanaType.POZYCJA_STOJACA, (byte) 1, false, R.drawable.camel);
             insertAsana(a1);
+        }
 
-            String descriptionCamel="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-            Bitmap bitmapCamel=BitmapFactory.decodeResource(context.getResources(),R.drawable.camel);
-            byte[] imageCamel = getBitmapAsByteArray(bitmapCamel); // this is a function
-            Asana a2= new Asana("Ustrasana","Wielbłąd",imageCamel,descriptionCamel,AsanaType.WYGIECIE_DO_TYLU, (byte) 2,true);
-            insertAsana(a2);
+//        String descriptionCamel = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+//        Bitmap bitmapCamel = BitmapFactory.decodeResource(context.getResources(), R.drawable.camel);
+//        byte[] imageCamel = getBitmapAsByteArray(bitmapCamel); // this is a function
+//        Asana a2 = new Asana("Ustrasana", "Wielbłąd", imageCamel, descriptionCamel, AsanaType.WYGIECIE_DO_TYLU, (byte) 2, true);
+//        insertAsana(a2);
+//
+//        String descriptionChair2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+//        Bitmap bitmapChair2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.chair2);
+//        byte[] imageChair2 = getBitmapAsByteArray(bitmapChair2); // this is a function
+//        Asana a3 = new Asana("Utkatasana", "Krzesło", imageChair2, descriptionChair, AsanaType.POZYCJA_STOJACA, (byte) 1, true);
+//        insertAsana(a3);
+//
+//        String descriptionCamel2 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
+//        Bitmap bitmapCamel2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.camel2);
+//        byte[] imageCamel2 = getBitmapAsByteArray(bitmapCamel2); // this is a function
+//        Asana a4 = new Asana("Ustrasana", "Wielbłąd", imageCamel2, descriptionCamel, AsanaType.WYGIECIE_DO_TYLU, (byte) 2, false);
+//        insertAsana(a4);
 
-            String descriptionChair2="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-            Bitmap bitmapChair2=BitmapFactory.decodeResource(context.getResources(),R.drawable.chair2);
-            byte[] imageChair2 = getBitmapAsByteArray(bitmapChair2); // this is a function
-            Asana a3= new Asana("Utkatasana","Krzesło",imageChair2,descriptionChair,AsanaType.POZYCJA_STOJACA, (byte) 1,true);
-            insertAsana(a3);
-
-            String descriptionCamel2="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nisi purus, aliquet non turpis sit amet, euismod dapibus lacus. Aenean luctus at augue a tristique. Quisque in dui erat. Nunc et congue lacus. Nulla cursus nibh lacus, non facilisis mi.";
-            Bitmap bitmapCamel2=BitmapFactory.decodeResource(context.getResources(),R.drawable.camel2);
-            byte[] imageCamel2 = getBitmapAsByteArray(bitmapCamel2); // this is a function
-            Asana a4= new Asana("Ustrasana","Wielbłąd",imageCamel2,descriptionCamel,AsanaType.WYGIECIE_DO_TYLU, (byte) 2,false);
-            insertAsana(a4);
     }
 
     //To store a image in to db
@@ -250,7 +237,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         ContentValues cv = new  ContentValues();
         cv.put(JogaContract.Asana.COLUMN_SANSKRIT_NAME,asana.getSanskritName());
         cv.put(JogaContract.Asana.COLUMN_NAME,asana.getName());
-        cv.put(JogaContract.Asana.COLUMN_IMAGE,asana.getImage());
+        cv.put(JogaContract.Asana.COLUMN_IMAGE,asana.getImgRes());
         cv.put(JogaContract.Asana.COLUMN_DESCRIPTION,asana.getDescription());
         cv.put(JogaContract.Asana.COLUMN_TYPE_ID,asana.getColumnTypeId());
         cv.put(JogaContract.Asana.COLUMN_DIFFICULTY,asana.getDifficulty());

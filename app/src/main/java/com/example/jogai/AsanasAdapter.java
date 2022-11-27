@@ -28,12 +28,12 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
         Asana asana = asanas.get(position);
             String sanskritName = asana.getSanskritName();
             String name = asana.getName();
-            Bitmap imageBitmap = BitmapFactory.decodeByteArray(asana.getImage(),0,asana.getImage().length);
+            int imageRes = asana.getImgRes();
             holder.txtName.setText(name);
             holder.txtSanskritName.setText(sanskritName);
             int drawableResourceId = context.getResources().getIdentifier("ic_done", "drawable", context.getPackageName());
             holder.imgIconDone.setImageResource(drawableResourceId);
-            holder.imgAsanaImage.setImageBitmap(imageBitmap);
+            holder.imgAsanaImage.setImageResource(imageRes);
 
         if(asana.isDone()){
             holder.imgIconDone.setColorFilter(context.getResources().getColor(R.color.teal_200));

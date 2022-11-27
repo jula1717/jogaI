@@ -75,7 +75,7 @@ public class AsanaFragment extends Fragment {
             iconDone.setVisibility(View.INVISIBLE);
             iconDone.setColorFilter(context.getResources().getColor(R.color.gray));
         }
-        image.setImageBitmap(BitmapFactory.decodeByteArray(asana.getImage(), 0, asana.getImage().length));
+        image.setImageResource(asana.getImgRes());
         image.setVisibility(View.VISIBLE);
         description.setVisibility(View.INVISIBLE);
         image.setOnClickListener(new View.OnClickListener() {
