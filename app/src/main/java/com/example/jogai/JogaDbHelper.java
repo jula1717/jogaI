@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=2;
+    public static final int DATABASE_VERSION=1;
     SQLiteDatabase db;
     Context context;
 
@@ -132,7 +132,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     public ArrayList<AsanaType> getTypes() {
         db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Types.TABLE_NAME,null);
+        Cursor c = db.query(JogaContract.Types.TABLE_NAME,null,null,null,null,null,null);
         ArrayList<AsanaType> types = new ArrayList<>();
         if (c.moveToFirst()) {
             do{
@@ -149,7 +149,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
 
     public ArrayList<Asana> getAsanas() {
         db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM " + JogaContract.Asana.TABLE_NAME,null);
+        Cursor c = db.query(JogaContract.Asana.TABLE_NAME,null,null,null,null,null,null);
         ArrayList<Asana> asanas = new ArrayList<>();
         if(c.moveToFirst()) {
             do {
