@@ -47,4 +47,8 @@ dependencies {
 
     //toast library
     implementation 'io.github.muddz:styleabletoast:2.4.0'
+
+    //progressBar
+    implementation 'com.akexorcist:round-corner-progress-bar:2.1.2'
+
 }

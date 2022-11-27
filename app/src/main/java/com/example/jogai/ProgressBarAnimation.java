@@ -4,12 +4,14 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+
 public class ProgressBarAnimation extends Animation {
-        private ProgressBar progressBar;
+        private RoundCornerProgressBar progressBar;
         private float from;
         private float  to;
 
-        public ProgressBarAnimation(ProgressBar progressBar, float from, float to) {
+        public ProgressBarAnimation(RoundCornerProgressBar progressBar, float from, float to) {
             super();
             this.progressBar = progressBar;
             this.from = from;

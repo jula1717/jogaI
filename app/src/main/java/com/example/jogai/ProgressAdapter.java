@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+
 import java.util.List;
 
 import io.github.muddz.styleabletoast.StyleableToast;
@@ -63,10 +65,12 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
                 doneRegardlessOfType +=doneQuantity;
             }
         }
+
         ProgressBarAnimation anim = new ProgressBarAnimation(holder.pbAsanaType, 0, doneQuantity*1000);
         anim.setDuration(1000);
         holder.pbAsanaType.setMax(allQuantity*1000);
         holder.pbAsanaType.startAnimation(anim);
+        holder.pbAsanaType.setProgress(doneQuantity*1000);
         holder.txtDone.setText(String.valueOf(doneQuantity));
         holder.txtAll.setText(String.valueOf(allQuantity));
         if(allRegardlessOfType == doneRegardlessOfType){
@@ -83,7 +87,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
 
         ImageView imgAsanaType;
         TextView txtAsanaType,txtDone,txtAll;
-        ProgressBar pbAsanaType;
+        RoundCornerProgressBar pbAsanaType;
 
         public ProgressViewHolder(@NonNull View itemView) {
             super(itemView);
