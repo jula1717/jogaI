@@ -4,17 +4,17 @@
 
     <item android:id="@+id/achievements"
         android:icon="@drawable/ic_success"
-        android:title="achievements"
+        android:title="@string/achievements"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/dark_theme"
-        android:title="dark theme"
+        android:title="@string/dark_theme"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/sort_by"
-        android:title="sort by"
+        android:title="@string/sort_by"
         app:showAsAction="never">
 
         <menu>

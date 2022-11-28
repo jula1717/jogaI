@@ -180,13 +180,13 @@ public class MainActivity extends AppCompatActivity {
                 return changeComparatorNumber(6);
             }
             case R.id.achievements:{
-                if (chceckBackstack(PROGRESS_FRAGMENT_TAG, ABOUT_FRAGMENT_TAG)) return true;
+                if (checkBackstack(PROGRESS_FRAGMENT_TAG, ABOUT_FRAGMENT_TAG)) return true;
                 Fragment progressFragment = ProgressFragment.newInstance(getApplicationContext());
                 replaceFragment(fragmentManager, progressFragment, PROGRESS_FRAGMENT_TAG);
                 return true;
             }
             case R.id.about:{
-                if (chceckBackstack(ABOUT_FRAGMENT_TAG, PROGRESS_FRAGMENT_TAG)) return true;
+                if (checkBackstack(ABOUT_FRAGMENT_TAG, PROGRESS_FRAGMENT_TAG)) return true;
                 Fragment aboutFragment = new AboutFragment();
                 replaceFragment(fragmentManager, aboutFragment, ABOUT_FRAGMENT_TAG);
                 return true;
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean chceckBackstack(String fragmentTagName, String fragmentToPopTagName) {
+    private boolean checkBackstack(String fragmentTagName, String fragmentToPopTagName) {
         if (isFragmentInBackstack(fragmentManager, fragmentTagName)) {
             return true;
         }

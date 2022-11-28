@@ -2,9 +2,20 @@
     <string name="app_name">jogaI</string>
     <string name="congrats">Gratulacje! Znasz już wszystkie asany></string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent viverra tristique malesuada. Donec dapibus mauris lectus, eu vestibulum risus luctus eu. Cras pretium, arcu vel lacinia lacinia, ante nisl fermentum nunc, lacinia semper velit tortor vel dolor. Donec felis lorem, consectetur quis consequat at, mollis eget orci. Quisque a purus elementum, tincidunt purus at, vehicula mauris. Nullam quis auctor urna. Praesent vitae odio est.</string>
-    <string name="about">Witaj w about!</string>
+    <string name="about_fragments">Witaj w about!</string>
     <string name="sample_type">pozycje stojące</string>
     <string name="sample_name">dziecko</string>
     <string name="sample_sanskrit">balasana</string>
     <string name="difficulty_level">poziom trudności</string>
+<!--    menu-->
+    <string name="achievements">postępy</string>
+    <string name="dark_theme">tryb ciemny</string>
+    <string name="sort_by">sortuj według</string>
+    <string name="name">nazwa</string>
+    <string name="sanskrit">sanskryt</string>
+    <string name="difficulty">poziom trudności</string>
+    <string name="done">nauczone</string>
+    <string name="undone">nienauczone</string>
+    <string name="type">typ asany</string>
+    <string name="about">o aplikacji</string>
 </resources>
