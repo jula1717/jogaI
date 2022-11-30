@@ -8,8 +8,9 @@
     android:layout_height="match_parent">
 
    <TextView
-       android:paddingTop="10dp"
+       android:paddingVertical="10dp"
        android:layout_width="match_parent"
+       android:background="@color/light_gray"
        android:layout_height="wrap_content"
        android:gravity="center"
        android:id="@+id/txtSanskritName"
@@ -21,12 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/imgAsana"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@color/gray" />
-
     <LinearLayout
         android:id="@+id/detailsLayout"
         android:layout_width="match_parent"
@@ -34,12 +29,16 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:layout_margin="3dp"
             android:layout_width="match_parent"
+            android:background="@color/dark_gray"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <LinearLayout
+                android:paddingVertical="10dp"
                 android:layout_marginLeft="15dp"
+                android:layout_weight="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -48,7 +47,7 @@
                     android:id="@+id/txtAsanaType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     tools:text="@string/sample_type" />
 
                 <LinearLayout
@@ -59,14 +58,14 @@
                     android:id="@+id/txtDfficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:text="@string/difficulty_level" />
 
                 <TextView
                     android:id="@+id/txtDifficultyLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     tools:text="1" />
 
                 </LinearLayout>
@@ -75,6 +74,7 @@
 
             <ImageView
                 android:id="@+id/imgDone"
+                android:layout_marginHorizontal="10dp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -84,27 +84,43 @@
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/txtDescription"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:scrollbars = "vertical"
-            android:text="@string/lorem_ipsum"
-            android:textSize="20sp" />
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/imgAsana"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/gray" />
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:scrollbars="vertical"
+                android:text="@string/lorem_ipsum"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 
 
     </RelativeLayout>
     <TextView
+        android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/txtName"
         android:textSize="30sp"
         android:text="@string/sample_name"
-        android:paddingBottom="10dp"/>
+        android:paddingVertical="10dp"/>
 
 
 </LinearLayout>
