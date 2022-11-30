@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.about:{
                 if (checkBackstack(ABOUT_FRAGMENT_TAG, PROGRESS_FRAGMENT_TAG)) return true;
                 Fragment aboutFragment = new AboutFragment();
+                recyclerView.setVisibility(View.GONE);
                 replaceFragment(fragmentManager, aboutFragment, ABOUT_FRAGMENT_TAG);
                 return true;
             }
