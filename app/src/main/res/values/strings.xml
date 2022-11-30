@@ -2,7 +2,6 @@
     <string name="app_name">jogaI</string>
     <string name="congrats">Gratulacje! Znasz już wszystkie asany></string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent viverra tristique malesuada. Donec dapibus mauris lectus, eu vestibulum risus luctus eu. Cras pretium, arcu vel lacinia lacinia, ante nisl fermentum nunc, lacinia semper velit tortor vel dolor. Donec felis lorem, consectetur quis consequat at, mollis eget orci. Quisque a purus elementum, tincidunt purus at, vehicula mauris. Nullam quis auctor urna. Praesent vitae odio est.</string>
-    <string name="about_fragments">Witaj w about!</string>
     <string name="sample_type">pozycje stojące</string>
     <string name="sample_name">dziecko</string>
     <string name="sample_sanskrit">balasana</string>
@@ -18,4 +17,15 @@
     <string name="undone">nienauczone</string>
     <string name="type">typ asany</string>
     <string name="about">o aplikacji</string>
+
+<!--    about-->
+    <string name="about_body">Aplikacja ma pomóc w nauce asan jogowych i umożliwić śledzenie swoich postępów użytkownikowi. Regularna praktyka jogi pozwala zredukować stres i powoduje wzrost parametrów motorycznych ciała człowieka. Aplikacja powstała z myślą o osobach, które miały okazję zapoznać się z podstawami jogi, chciałyby poznać trochę więcej asan i obserwować swoje osiągnięcia. Pamiętaj więc, że na początku swojej przygody z jogą warto wybrać się chociaż kilka razy do studia jogi, żeby pod okiem instruktora upewnić się, że prawidłowo wykonujesz podstawowe asany. </string>
+    <string name="about_headline">Informacje o aplikacji</string>
+    <string name="yoga_studio">Poszukaj studia jogi w swojej okolicy</string>
+    <string name="github">Zobacz kod źródłowy na githubie</string>
+    <string name="feedback">Wyślij uwagi do programisty</string>
+    <string name="authors">Programiści</string>
+    <string name="me">Julia Płócienniczak</string>
+    <string name="studio">studio jogi</string>
+
 </resources>
