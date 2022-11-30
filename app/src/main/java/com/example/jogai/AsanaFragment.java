@@ -46,7 +46,7 @@ public class AsanaFragment extends Fragment {
 
     private void initializeViews(View view) {
         sankritName = view.findViewById(R.id.txtSanskritName);
-        name = view.findViewById(R.id.txtSanskritName);
+        name = view.findViewById(R.id.txtName);
         difficulty = view.findViewById(R.id.txtDifficultyLevel);
         type = view.findViewById(R.id.txtAsanaType);
         description = view.findViewById(R.id.txtDescription);
