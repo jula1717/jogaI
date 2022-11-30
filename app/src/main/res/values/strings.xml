@@ -5,7 +5,7 @@
     <string name="sample_type">pozycje stojące</string>
     <string name="sample_name">dziecko</string>
     <string name="sample_sanskrit">balasana</string>
-    <string name="difficulty_level">poziom trudności: </string>
+    <string name="difficulty_level">poziom trudności</string>
 <!--    menu-->
     <string name="achievements">postępy</string>
     <string name="dark_theme">tryb ciemny</string>

@@ -14,12 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+
 public class AsanaFragment extends Fragment {
     public static final String ARG_ASANA="asana";
     private AsanaModel asana;
     Context context;
     JogaDbHelper dbHelper;
-    TextView sankritName,name,difficulty,type,description;
+    TextView sankritName,name,type,description;
+    RoundCornerProgressBar pbDifficulty;
     ImageView iconDone,image;
     boolean imageVisible = true;
 
@@ -47,11 +50,12 @@ public class AsanaFragment extends Fragment {
     private void initializeViews(View view) {
         sankritName = view.findViewById(R.id.txtSanskritName);
         name = view.findViewById(R.id.txtName);
-        difficulty = view.findViewById(R.id.txtDifficultyLevel);
         type = view.findViewById(R.id.txtAsanaType);
         description = view.findViewById(R.id.txtDescription);
         iconDone = view.findViewById(R.id.imgDone);
         image = view.findViewById(R.id.imgAsana);
+        pbDifficulty = view.findViewById(R.id.pbDifficultyLevel);
+
 
         if(getArguments()!=null){
             asana = getArguments().getParcelable(ARG_ASANA);
@@ -59,7 +63,11 @@ public class AsanaFragment extends Fragment {
 
         sankritName.setText(asana.getName());
         name.setText(asana.getName());
-        difficulty.setText(""+asana.getDifficulty());
+        ProgressBarAnimation anim = new ProgressBarAnimation(pbDifficulty, 0, asana.getDifficulty()*1000);
+        anim.setDuration(1000);
+        pbDifficulty.setMax(5*1000);
+        pbDifficulty.startAnimation(anim);
+        pbDifficulty.setProgress(asana.getDifficulty()*1000);
         type.setText(getTypeName());
         description.setText(asana.getDescription());
         description.setMovementMethod(new ScrollingMovementMethod());

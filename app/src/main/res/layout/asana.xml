@@ -61,13 +61,16 @@
                     android:textSize="20sp"
                     android:text="@string/difficulty_level" />
 
-                <TextView
-                    android:id="@+id/txtDifficultyLevel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    tools:text="1" />
 
+                <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                    android:layout_width="60dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="5dp"
+                    app:rcAnimationSpeedScale="3"
+                    app:rcBackgroundColor="@color/white"
+                    android:id="@+id/pbDifficultyLevel"
+                    app:rcProgressColor="#EF5350" />
                 </LinearLayout>
 
             </LinearLayout>

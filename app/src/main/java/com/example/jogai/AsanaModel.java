@@ -4,14 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class AsanaModel implements Parcelable {
-    int id;
-    String sanskritName;
-    String name;
-    String description;
-    int columnTypeId;
-    byte difficulty;
-    boolean done;
-    int imgRes;
+    private int id;
+    private String sanskritName;
+    private String name;
+    private String description;
+    private int columnTypeId;
+    private byte difficulty;
+    private boolean done;
+    private int imgRes;
 
     public AsanaModel() {
     }
