@@ -6,19 +6,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 
 import com.example.jogai.JogaContract.*;
 
 import androidx.annotation.Nullable;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=4;
+    public static final int DATABASE_VERSION=5;
     SQLiteDatabase db;
     Context context;
 
