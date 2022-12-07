@@ -73,7 +73,8 @@ public class AsanaFragment extends Fragment {
         description.setMovementMethod(new ScrollingMovementMethod());
         description.setOnClickListener(imageAndDescriptionListener);
         image.setOnClickListener(imageAndDescriptionListener);
-        image.setColorFilter(getResources().getColor(R.color.dark_gray));
+//        image.setColorFilter(getResources().getColor(R.color.dark_gray));
+        image.setColorFilter(getResources().getColor(R.color.s5));
         image.setImageResource(asana.getImgRes());
         iconDoneDisplay();
         description.setVisibility(View.INVISIBLE);
@@ -82,7 +83,7 @@ public class AsanaFragment extends Fragment {
     private void iconDoneDisplay() {
         if(asana.isDone()) {
             iconDone.setVisibility(View.VISIBLE);
-            iconDone.setColorFilter(context.getResources().getColor(R.color.teal_200));
+            iconDone.setColorFilter(context.getResources().getColor(R.color.s3));
         }
         else {
             iconDone.setVisibility(View.INVISIBLE);
