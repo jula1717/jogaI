@@ -6,11 +6,23 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
 
-<!--use in project-->
+    <!--use in project-->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="very_light_gray">#dddddd</color>
     <color name="light_gray">#aaaaaa</color>
     <color name="gray">#555555</color>
     <color name="dark_gray">#333333</color>
-    <color name="test">#33d312</color>
+
+
+    <!--    sample 2-->
+    <color name="s1">#703940</color>
+    <color name="s2">#F2C4CA</color>
+    <color name="s3">#F07A88</color>
+    <color name="s4">#753940</color>
+    <color name="s5">#BD606B</color>
+
+    <color name="font">@color/black</color>
+
+
 </resources>

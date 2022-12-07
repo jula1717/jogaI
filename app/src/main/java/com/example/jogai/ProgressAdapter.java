@@ -49,6 +49,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         holder.txtAsanaType.setText(typeName);
         int imgRes = type.getImgRes();
         holder.imgAsanaType.setImageResource(imgRes);
+        holder.imgAsanaType.setColorFilter(context.getResources().getColor(R.color.s5));
         allQuantity = dbHelper.countNumberOfAllAsanasSpecificType();
         int allQuantity = 0;
         for (Point singleType: this.allQuantity) {

@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
         asanas.get(position).setDone(newState);
         dbHelper.changeAsanaState(position,newState);
         if(asanas.get(position).isDone()){
-            imgIconDone.setColorFilter(getResources().getColor(R.color.teal_200));
-            imgAsana.setColorFilter(getResources().getColor(R.color.teal_200));
+            imgIconDone.setColorFilter(getResources().getColor(R.color.s3));
+            imgAsana.setColorFilter(getResources().getColor(R.color.s5));
         }else{
             imgIconDone.setColorFilter(getResources().getColor(R.color.gray));
             imgAsana.setColorFilter(getResources().getColor(R.color.gray));
