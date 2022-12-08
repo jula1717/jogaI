@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=5;
+    public static final int DATABASE_VERSION=6;
     SQLiteDatabase db;
     Context context;
 
@@ -187,7 +187,7 @@ public class JogaDbHelper extends SQLiteOpenHelper {
         TypeModel t2 = new TypeModel("wygięcia do tyłu",R.drawable.eka_pada_rajakapotasana_ii);	insertType(t2);
         TypeModel t3 = new TypeModel("równowaga",R.drawable.garudasana);	insertType(t3);
         TypeModel t4 = new TypeModel("oddychanie",R.drawable.vajrasana);	insertType(t4);
-        TypeModel t5 = new TypeModel("otwieranie klatki piersiowej",R.drawable.ustrasana);	insertType(t5);
+        TypeModel t5 = new TypeModel("otwieranie klatki",R.drawable.ustrasana);	insertType(t5);
         TypeModel t6 = new TypeModel("skłony do przodu",R.drawable.parsvottanasana);	insertType(t6);
         TypeModel t7 = new TypeModel("otwieranie bioder",R.drawable.malasana);	insertType(t7);
         TypeModel t8 = new TypeModel("skręty",R.drawable.katichakrasana);	insertType(t8);

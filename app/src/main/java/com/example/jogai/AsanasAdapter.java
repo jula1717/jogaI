@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -34,13 +35,19 @@ public class AsanasAdapter extends RecyclerView.Adapter<AsanasAdapter.AsanasView
             int drawableResourceId = context.getResources().getIdentifier("ic_done", "drawable", context.getPackageName());
             holder.imgDone.setImageResource(drawableResourceId);
             holder.imgAsana.setImageResource(imageRes);
-
+            boolean nightmode = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
         if(asana.isDone()){
             holder.imgDone.setColorFilter(context.getResources().getColor(R.color.s3));
-            holder.imgAsana.setColorFilter(context.getResources().getColor(R.color.s5));
+            holder.imgAsana.setColorFilter(context.getResources().getColor(R.color.s3));
         }else{
-            holder.imgDone.setColorFilter(context.getResources().getColor(R.color.dark_gray));
-            holder.imgAsana.setColorFilter(context.getResources().getColor(R.color.dark_gray));
+            if (!nightmode){
+                holder.imgAsana.setColorFilter(context.getResources().getColor(R.color.gray));
+                holder.imgDone.setColorFilter(context.getResources().getColor(R.color.light_gray));
+            }
+            else{
+                holder.imgAsana.setColorFilter(context.getResources().getColor(R.color.very_light_gray));
+                holder.imgDone.setColorFilter(context.getResources().getColor(R.color.dark_gray));
+            }
         }
     }
 

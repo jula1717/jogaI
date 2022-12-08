@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.JogaI" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Dark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/s3</item>
@@ -12,5 +12,17 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="background_color">@color/very_dark_gray</item>
+        <item name="text_color">@color/white</item>
+        <item name="second_text_color">@color/dark_gray</item>
+        <item name="recycler_background_color">@color/dark_gray</item>
+        <item name="textView_background">@color/dark_gray</item>
+        <item name="brighter_textView_background">@color/light_gray</item>
+        <item name="asana_image_tint">@color/very_light_gray</item>
+        <item name="rc_progress_color">@color/very_dark_gray</item>
+        <item name="small_rc_progress_color">@color/gray</item>
+        <item name="rc_background_color">@color/transparentBackground</item>
+        <item name="little_cardview_color">@color/gray</item>
+        <item name="icon_done">@color/s4</item>
     </style>
 </resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="dark_theme">
+        <attr name="background_color" format="color"/>
+        <attr name="text_color" format="color"/>
+        <attr name="second_text_color" format="color"/>
+        <attr name="recycler_background_color" format="color"/>
+        <attr name="textView_background" format="color"/>
+        <attr name="brighter_textView_background" format="color"/>
+        <attr name="asana_image_tint" format="color"/>
+        <attr name="rc_progress_color" format="color"/>
+        <attr name="small_rc_progress_color" format="color"/>
+        <attr name="rc_background_color" format="color"/>
+        <attr name="little_cardview_color" format="color"/>
+        <attr name="icon_done" format="color"/>
+    </declare-styleable>
+</resources>

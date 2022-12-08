@@ -13,16 +13,19 @@
     <color name="light_gray">#aaaaaa</color>
     <color name="gray">#555555</color>
     <color name="dark_gray">#333333</color>
+    <color name="very_dark_gray">#222222</color>
 
 
-    <!--    sample 2-->
+    <!-- pink set -->
     <color name="s1">#703940</color>
     <color name="s2">#F2C4CA</color>
+    <color name="s2proLight">#F3D5DB</color>
     <color name="s3">#F07A88</color>
     <color name="s4">#753940</color>
     <color name="s5">#BD606B</color>
 
-    <color name="font">@color/black</color>
+    <!-- progressBar transparency-->
+    <color name="transparentBackground">#0A000000</color>
 
 
 </resources>

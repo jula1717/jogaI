@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getMode();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -71,11 +72,20 @@ public class MainActivity extends AppCompatActivity {
         changeModeFirstTime();
     }
 
+    private void getMode() {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.Theme_Dark);
+        } else {
+            setTheme(R.style.Theme_Light);
+        }
+    }
+
     AsanasAdapter.OnItemClickListener onItemClickListener = new AsanasAdapter.OnItemClickListener() {
         @Override
         public void onItemClicked(int position) {
             AsanaFragment fragment = AsanaFragment.newInstance(asanas.get(position),getApplicationContext());
             replaceFragment(fragmentManager, fragment, ASANA_FRAGMENT_TAG);
+            recyclerView.setVisibility(View.GONE);
         }
 
         @Override
@@ -109,10 +119,14 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.changeAsanaState(position,newState);
         if(asanas.get(position).isDone()){
             imgIconDone.setColorFilter(getResources().getColor(R.color.s3));
-            imgAsana.setColorFilter(getResources().getColor(R.color.s5));
+            imgAsana.setColorFilter(getResources().getColor(R.color.s3));
         }else{
-            imgIconDone.setColorFilter(getResources().getColor(R.color.gray));
-            imgAsana.setColorFilter(getResources().getColor(R.color.gray));
+            if(!nightmode){
+                imgAsana.setColorFilter(getResources().getColor(R.color.very_light_gray));
+            }else{
+                imgAsana.setColorFilter(getResources().getColor(R.color.light_gray));
+                imgIconDone.setColorFilter(getResources().getColor(R.color.gray));
+            }
         }
         adapter.notifyDataSetChanged();
         saveData();
@@ -234,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeModeFirstTime() {
 
+        getMode();
         if(nightmode){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else{

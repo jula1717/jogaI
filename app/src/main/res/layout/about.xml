@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/background_color">
 
     <TextView
         android:id="@+id/txtAboutHeadline"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:background="@color/s5"
+        android:background="?attr/textView_background"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/about_headline"
@@ -28,7 +28,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:text="@string/about_body"
-        android:textColor="@color/font"
+        android:textColor="?attr/text_color"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/view1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/s5"
+        android:background="?attr/textView_background"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/authors"
@@ -67,7 +67,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         android:text="@string/me"
-        android:textColor="@color/font"
+        android:textColor="?attr/text_color"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/authors" />
 
@@ -98,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="JogaI"
-        android:textColor="@color/font"
+        android:textColor="?attr/text_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
