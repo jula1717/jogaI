@@ -101,16 +101,16 @@
                     android:layout_height="match_parent"
                     app:tint="?attr/asana_image_tint" />
 
-                   <TextView
-                        android:id="@+id/txtDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:padding="10dp"
-                       android:scrollbars="vertical"
-                        android:text="@string/lorem_ipsum"
-                        android:textColor="?attr/text_color"
-                        android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    android:text="@string/lorem_ipsum"
+                    android:textColor="?attr/text_color"
+                    android:textSize="20sp" />
 
             </RelativeLayout>
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class JogaDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="joga.db";
-    public static final int DATABASE_VERSION=6;
+    public static final int DATABASE_VERSION=1;
     SQLiteDatabase db;
     Context context;
 

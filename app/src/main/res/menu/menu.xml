@@ -21,27 +21,27 @@
 
             <item
                 android:id="@+id/sort_name"
-                android:title="name" />
+                android:title="@string/name" />
 
             <item
                 android:id="@+id/sort_sanskrit"
-                android:title="sanskrit" />
+                android:title="@string/sanskrit" />
 
             <item
                 android:id="@+id/sort_difficulty"
-                android:title="difficulty" />
+                android:title="@string/difficulty" />
 
             <item
                 android:id="@+id/sort_done"
-                android:title="done" />
+                android:title="@string/done" />
 
             <item
                 android:id="@+id/sort_undone"
-                android:title="undone" />
+                android:title="@string/undone" />
 
             <item
                 android:id="@+id/sort_type"
-                android:title="type" />
+                android:title="@string/type" />
 
         </menu>
 
@@ -49,7 +49,7 @@
 
     <item
         android:id="@+id/about"
-        android:title="about"
+        android:title="@string/about"
         app:showAsAction="never" />
 
 </menu>
