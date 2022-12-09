@@ -2,8 +2,11 @@ package com.example.jogai;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Debug;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -62,7 +65,7 @@ public class AsanaFragment extends Fragment {
             asana = getArguments().getParcelable(ARG_ASANA);
         }
 
-        sankritName.setText(asana.getName());
+        sankritName.setText(asana.getSanskritName());
         name.setText(asana.getName());
         ProgressBarAnimation anim = new ProgressBarAnimation(pbDifficulty, 0, asana.getDifficulty()*1000);
         anim.setDuration(1000);
