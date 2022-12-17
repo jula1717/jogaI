@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 imgIconDone.setColorFilter(getResources().getColor(R.color.gray));
             }
         }
+        mySort(comparatorNumber);
         adapter.notifyDataSetChanged();
         saveData();
     }
