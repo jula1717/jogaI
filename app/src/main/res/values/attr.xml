@@ -13,5 +13,6 @@
         <attr name="rc_background_color" format="color"/>
         <attr name="little_cardview_color" format="color"/>
         <attr name="icon_done" format="color"/>
+        <attr name="icon_reverse" format="color"/>
     </declare-styleable>
 </resources>

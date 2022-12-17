@@ -27,7 +27,7 @@ public class AsanaFragment extends Fragment {
     JogaDbHelper dbHelper;
     TextView sankritName,name,type,description;
     RoundCornerProgressBar pbDifficulty;
-    ImageView iconDone,image;
+    ImageView iconDone,image,change;
     boolean imageVisible = true;
 
     public static AsanaFragment newInstance(AsanaModel asana, Context context){
@@ -58,6 +58,7 @@ public class AsanaFragment extends Fragment {
         description = view.findViewById(R.id.txtDescription);
         iconDone = view.findViewById(R.id.imgDone);
         image = view.findViewById(R.id.imgAsana);
+        change = view.findViewById(R.id.imgDescriptionImageChange);
         pbDifficulty = view.findViewById(R.id.pbDifficultyLevel);
 
 
@@ -75,8 +76,7 @@ public class AsanaFragment extends Fragment {
         type.setText(getTypeName());
         description.setText(asana.getDescription());
         description.setMovementMethod(new ScrollingMovementMethod());
-        description.setOnClickListener(imageAndDescriptionListener);
-        image.setOnClickListener(imageAndDescriptionListener);
+        change.setOnClickListener(imageAndDescriptionListener);
         image.setImageResource(asana.getImgRes());
         iconDoneDisplay();
         description.setVisibility(View.INVISIBLE);

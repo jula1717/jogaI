@@ -11,6 +11,7 @@
         android:id="@+id/txtSanskritName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
         android:background="?attr/textView_background"
         android:gravity="center"
         android:paddingVertical="10dp"
@@ -112,6 +113,20 @@
                     android:textColor="?attr/text_color"
                     android:textSize="20sp" />
 
+                <ImageView
+                    android:id="@+id/imgDescriptionImageChange"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0.75"
+                    android:src="@drawable/ic_refresh"
+                    app:tint="?attr/icon_reverse" />
+
             </RelativeLayout>
 
 
@@ -124,6 +139,7 @@
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
         android:background="?attr/textView_background"
         android:gravity="center"
         android:paddingVertical="10dp"

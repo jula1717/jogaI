@@ -24,5 +24,6 @@
         <item name="rc_background_color">@color/transparentBackground</item>
         <item name="little_cardview_color">@color/gray</item>
         <item name="icon_done">@color/s4</item>
+        <item name="icon_reverse">@color/very_light_gray</item>
     </style>
 </resources>

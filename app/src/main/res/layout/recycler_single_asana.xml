@@ -21,8 +21,8 @@
             android:layout_height="100dp"
             android:layout_marginVertical="20dp"
             android:layout_marginLeft="20dp"
-            tools:srcCompat="@tools:sample/avatars"
-            app:tint="?attr/asana_image_tint" />
+            app:tint="?attr/asana_image_tint"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
@@ -43,6 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:autoSizeTextType="uniform"
                     android:text="sanskrit asana name"
                     android:textAlignment="center"
                     android:textColor="?attr/text_color"
@@ -52,9 +53,9 @@
                 <TextView
                     android:id="@+id/txtAsanaName"
                     android:layout_width="match_parent"
-                    android:autoSizeTextType="uniform"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:autoSizeTextType="uniform"
                     android:textAlignment="center"
                     android:textColor="?attr/text_color"
                     android:textSize="20sp"

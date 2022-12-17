@@ -25,6 +25,7 @@
         <item name="little_cardview_color">@color/very_light_gray</item>
 <!--        <item name="little_cardview_color">@color/s2proLight</item>-->
         <item name="icon_done">@color/s3</item>
+        <item name="icon_reverse">@color/gray</item>
     </style>
 
     <style name="congratsToast">
